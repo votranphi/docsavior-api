@@ -2,6 +2,7 @@ package com.example.restapi;
 
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import jakarta.mail.Authenticator;
@@ -33,7 +34,7 @@ public class UserController {
     UserService userService = new UserService();
 
     @PostMapping("/add")
-    public ResponseEntity<?> postSignUp(@RequestParam String username, @RequestParam String email, @RequestParam String phoneNumber, @RequestParam String password) {
+    public @ResponseBody ResponseEntity<?> postSignUp(@RequestParam String username, @RequestParam String email, @RequestParam String phoneNumber, @RequestParam String password) {
         // check if the email is valid
         Pattern pattern = Pattern.compile(".+@gmail.com$");
         Matcher matcher = pattern.matcher(email);
@@ -72,7 +73,7 @@ public class UserController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<?> postLogin(@RequestParam String username, @RequestParam String password) {
+    public @ResponseBody ResponseEntity<?> postLogin(@RequestParam String username, @RequestParam String password) {
         var thisUser = userService.getUserById(username);
 
         if (!thisUser.isEmpty()) {
@@ -87,7 +88,7 @@ public class UserController {
     }
 
     @PostMapping("/password_recovery")
-    public ResponseEntity<?> postPasswordRecovery(@RequestParam String username, @RequestParam String email, @RequestParam String phoneNumber) {
+    public @ResponseBody ResponseEntity<?> postPasswordRecovery(@RequestParam String username, @RequestParam String email, @RequestParam String phoneNumber) {
         var thisUser = userService.getUserById(username);
 
         if (!thisUser.isEmpty()) {
