@@ -40,12 +40,12 @@ public class UserController {
         Matcher matcher = pattern.matcher(email);
         boolean isFound = matcher.find();
         if (!isFound) {
-            return new ResponseEntity<>(new Detail("Email is invalid!"), HttpStatusCode.valueOf(401));
+            return new ResponseEntity<>(new Detail("Email is invalid!"), HttpStatusCode.valueOf(600));
         }
 
         // check if the phone number is valid
         if (phoneNumber.length() != 10 || phoneNumber.charAt(0) != '0') {
-            return new ResponseEntity<>(new Detail("Phone number is invalid!"), HttpStatusCode.valueOf(401));
+            return new ResponseEntity<>(new Detail("Phone number is invalid!"), HttpStatusCode.valueOf(600));
         }
 
         // create new user
@@ -53,17 +53,17 @@ public class UserController {
 
         // check if the username is in table
         if (userService.doesUsernameExist(username)) {
-            return new ResponseEntity<>(new Detail("Username already exists!"), HttpStatusCode.valueOf(401));
+            return new ResponseEntity<>(new Detail("Username already exists!"), HttpStatusCode.valueOf(600));
         }
 
         // check if the email is registered
         if (userService.doesEmailExist(email)) {
-            return new ResponseEntity<>(new Detail("Email already exists!"), HttpStatusCode.valueOf(401));
+            return new ResponseEntity<>(new Detail("Email already exists!"), HttpStatusCode.valueOf(600));
         }
 
         // check if the phoneNumber is registered
         if (userService.doesPhoneNumberExist(phoneNumber)) {
-            return new ResponseEntity<>(new Detail("Phone number already exists!"), HttpStatusCode.valueOf(401));
+            return new ResponseEntity<>(new Detail("Phone number already exists!"), HttpStatusCode.valueOf(600));
         }
 
         // add new user to the database
@@ -80,11 +80,11 @@ public class UserController {
             if (password.equals(thisUser.get().getPassword())) {
                 return new ResponseEntity<>(new Detail("Login successfully!"), HttpStatusCode.valueOf(200));
             } else {
-                return new ResponseEntity<>(new Detail("Wrong password!"), HttpStatusCode.valueOf(401));
+                return new ResponseEntity<>(new Detail("Wrong password!"), HttpStatusCode.valueOf(600));
             }
         }
 
-        return new ResponseEntity<>(new Detail("Username doesn't exist!"), HttpStatusCode.valueOf(401));
+        return new ResponseEntity<>(new Detail("Username doesn't exist!"), HttpStatusCode.valueOf(600));
     }
 
     @PostMapping("/password_recovery")
@@ -153,14 +153,14 @@ public class UserController {
 
                     return new ResponseEntity<>(new Detail("New password was sent to your email!"), HttpStatusCode.valueOf(200));
                 } else {
-                    return new ResponseEntity<>(new Detail("Wrong phone number!"), HttpStatusCode.valueOf(401));
+                    return new ResponseEntity<>(new Detail("Wrong phone number!"), HttpStatusCode.valueOf(600));
                 }
             } else {
-                return new ResponseEntity<>(new Detail("Wrong email!"), HttpStatusCode.valueOf(401));
+                return new ResponseEntity<>(new Detail("Wrong email!"), HttpStatusCode.valueOf(600));
             }
         }
 
-        return new ResponseEntity<>(new Detail("Username doesn't exist!"), HttpStatusCode.valueOf(401));
+        return new ResponseEntity<>(new Detail("Username doesn't exist!"), HttpStatusCode.valueOf(600));
     }
 
     public static final int NUMBER_OF_RANDOM_PASSWORD_CHARACTER = 6;
