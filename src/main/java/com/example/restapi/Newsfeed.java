@@ -23,13 +23,19 @@ public class Newsfeed {
 
     private Integer commentNumber;
 
-    public Newsfeed(String username, String postDescription, String postContent, Integer likeNumber, Integer dislikeNumber, Integer commentNumber) {
+    private String newsfeedFileData;
+
+    private String newsfeedFileExtension;
+
+    public Newsfeed(String username, String postDescription, String postContent, String newsfeedFileData, String newsfeedFileExtension) {
         this.username = username;
         this.postDescription = postDescription;
         this.postContent = postContent;
-        this.likeNumber = likeNumber;
-        this.dislikeNumber = dislikeNumber;
-        this.commentNumber = commentNumber;
+        this.likeNumber = 0;
+        this.dislikeNumber = 0;
+        this.commentNumber = 0;
+        this.newsfeedFileData = newsfeedFileData;
+        this.newsfeedFileExtension = newsfeedFileExtension;
     }
 
     public Newsfeed() { }
@@ -62,6 +68,14 @@ public class Newsfeed {
         return commentNumber;
     }
 
+    public String getNewsfeedFileData() {
+        return newsfeedFileData;
+    }
+
+    public String getNewsfeedFileExtension() {
+        return newsfeedFileExtension;
+    }
+
     public void setId(Integer id) {
         this.id = id;
     }
@@ -88,5 +102,13 @@ public class Newsfeed {
 
     public void setCommentNumber(Integer commentNumber) {
         this.commentNumber = commentNumber;
+    }
+    
+    public void setNewsfeedFileData(String newsfeedFileData) {
+        this.newsfeedFileData = newsfeedFileData;
+    }
+
+    public void setNewsfeedFileExtension(String newsfeedFileExtension) {
+        this.newsfeedFileExtension = newsfeedFileExtension;
     }
 }

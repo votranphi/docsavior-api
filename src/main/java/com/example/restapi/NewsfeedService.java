@@ -19,4 +19,8 @@ public class NewsfeedService {
     public void saveNewPost(Newsfeed newNewfeed) {
         newfeedRepository.save(newNewfeed);
     }
+
+    public void saveNewNewsfeed(Newsfeed newNewsfeed) {
+        newfeedRepository.save(newNewsfeed);
+    }
 }

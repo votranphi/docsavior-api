@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
@@ -30,12 +31,15 @@ public class NewsfeedController {
 
         for (Newsfeed i : allPosts) {
             JSONObject jsonObject = new JSONObject();
+            jsonObject.put("id", i.getId());
             jsonObject.put("username", i.getUsername());
             jsonObject.put("postDescription", i.getPostDescription());
             jsonObject.put("postContent", i.getPostContent());
             jsonObject.put("likeNumber", i.getLikeNumber());
             jsonObject.put("dislikeNumber", i.getDislikeNumber());
             jsonObject.put("commentNumber", i.getCommentNumber());
+            jsonObject.put("newsfeedFileData", i.getNewsfeedFileData());
+            jsonObject.put("newsfeedFileExtension", i.getNewsfeedFileExtension());
 
             jsonArray.put(jsonObject);
         }
@@ -44,21 +48,15 @@ public class NewsfeedController {
     }
 
     @PostMapping("/add")
-    public String postPost() {
-        // create fake dataset
-        Newsfeed newfeed1 = new Newsfeed("votranphi", "Cách chơi bài luôn thắng", "ABCDEFG", 100, 200, 300);
-        Newsfeed newfeed2 = new Newsfeed("votranphi1", "Toán học 12", "ABCDEFG", 1, 2, 3);
-        Newsfeed newfeed3 = new Newsfeed("votranphi2", "Ngữ văn 9", "ABCDEFG", 0, 0, 0);
-        Newsfeed newfeed4 = new Newsfeed("votranphi3", "Đắc nhân tâm", "ABCDEFG", 6, 5, 4);
-        Newsfeed newfeed5 = new Newsfeed("votranphi4", "Hạt giống tâm hồn", "ABCDEFG", 4, 5, 5);
-
-        newfeedService.saveNewPost(newfeed1);
-        newfeedService.saveNewPost(newfeed2);
-        newfeedService.saveNewPost(newfeed3);
-        newfeedService.saveNewPost(newfeed4);
-        newfeedService.saveNewPost(newfeed5);
+    public ResponseEntity<?> postPost(@RequestParam String username, @RequestParam String postDescription, @RequestParam String postContent, @RequestParam String newsfeedFileData, @RequestParam String newsfeedFileExtension) {
         
-        return "";
+        // create new Newsfeed entity
+        Newsfeed newNewsfeed = new Newsfeed(username, postDescription, postContent, newsfeedFileData, newsfeedFileExtension);
+
+        // save newNewsfeed
+        newfeedService.saveNewNewsfeed(newNewsfeed);
+        
+        return ResponseEntity.ok(new Detail("Post successfully!"));
     }
     
 }   

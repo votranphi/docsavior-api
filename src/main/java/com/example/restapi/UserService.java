@@ -59,9 +59,7 @@ public class UserService {
         return false;
     }
 
-    public LocalDate convertToLocalDate(String date) {
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
-        LocalDate localDate = LocalDate.parse(date, formatter);
-        return localDate;
+    public int myRandom(int min, int max) {
+        return (int)(Math.random() * (max - min + 0.99) + min);
     }
 }

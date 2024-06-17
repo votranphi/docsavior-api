@@ -25,6 +25,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.json.JSONObject;
+
 
 @RestController
 @RequestMapping(value = "/user")
@@ -32,9 +35,10 @@ public class UserController {
 
     @Autowired
     UserService userService = new UserService();
+    public static final int NUMBER_OF_RANDOM_PASSWORD_CHARACTER = 6;
 
     @PostMapping("/add")
-    public @ResponseBody ResponseEntity<?> postSignUp(@RequestParam String username, @RequestParam String email, @RequestParam String phoneNumber, @RequestParam String password, @RequestParam String fullName, @RequestParam String birthDate) {
+    public @ResponseBody ResponseEntity<?> postSignUp(@RequestParam String username, @RequestParam String email, @RequestParam String phoneNumber, @RequestParam String password, @RequestParam String fullName, @RequestParam String birthDate, @RequestParam String avatarData, @RequestParam String avatarExtension) {
         // check if the email is valid
         Pattern pattern = Pattern.compile(".+@gmail.com$");
         Matcher matcher = pattern.matcher(email);
@@ -64,7 +68,7 @@ public class UserController {
         }
 
         // create new user
-        User newUser = new User(username, email, phoneNumber, password, false, fullName, userService.convertToLocalDate(birthDate));
+        User newUser = new User(username, email, phoneNumber, password, false, fullName, birthDate, avatarData, avatarExtension);
 
         // add new user to the database
         userService.saveNewUser(newUser);
@@ -99,15 +103,15 @@ public class UserController {
                     for (int i = 0; i < NUMBER_OF_RANDOM_PASSWORD_CHARACTER; i++)
                     {
                         // 0: number, 1: uppercase character, 2: lowercase character
-                        switch (myRandom(0, 2)) {
+                        switch (userService.myRandom(0, 2)) {
                             case 0:
-                                randomPassword += (char)myRandom(48, 57);
+                                randomPassword += (char)userService.myRandom(48, 57);
                                 break;
                             case 1:
-                                randomPassword += (char)myRandom(65, 90);
+                                randomPassword += (char)userService.myRandom(65, 90);
                                 break;
                             case 2:
-                                randomPassword += (char)myRandom(97, 122);
+                                randomPassword += (char)userService.myRandom(97, 122);
                                 break;
                         }
                     }
@@ -163,8 +167,25 @@ public class UserController {
         return new ResponseEntity<>(new Detail("Username doesn't exist!"), HttpStatusCode.valueOf(600));
     }
 
-    public static final int NUMBER_OF_RANDOM_PASSWORD_CHARACTER = 6;
-    private int myRandom(int min, int max) {
-        return (int)(Math.random() * (max - min + 0.99) + min);
+    @GetMapping("/me")
+    public ResponseEntity<?> getMethodName(@RequestParam String username) {
+        var user = userService.getUserById(username);
+
+        if (user.isEmpty()) {
+            return new ResponseEntity<>(new Detail("Username doesn't exist!"), HttpStatusCode.valueOf(600));
+        } else {
+            JSONObject jsonObject = new JSONObject();
+            jsonObject.put("username", user.get().getUsername());
+            jsonObject.put("email", user.get().getEmail());
+            jsonObject.put("phoneNumber", user.get().getPhoneNumber());
+            // jsonObject.put("password", user.get().getPassword());
+            jsonObject.put("isActive", user.get().getIsActive());
+            jsonObject.put("fullName", user.get().getFullName());
+            jsonObject.put("birthDate", user.get().getBirthDate().toString());
+            jsonObject.put("avatarData", user.get().getAvatarData());
+            jsonObject.put("avatarExtension", user.get().getAvatarExtension());
+
+            return ResponseEntity.ok(jsonObject.toString());
+        }
     }
 }

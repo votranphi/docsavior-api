@@ -19,11 +19,13 @@ public class User {
 
     private String fullName;
 
-    private LocalDate birthDate;
+    private String birthDate;
 
-    private String avatarUrl;
+    private String avatarData;
 
-    public User(String username, String email, String phoneNumber, String password, boolean isActive, String fullName, LocalDate birthDate) {
+    private String avatarExtension;
+
+    public User(String username, String email, String phoneNumber, String password, boolean isActive, String fullName, String birthDate, String avatarData, String avatarExtension) {
         this.username = username;
         this.email = email;
         this.phoneNumber = phoneNumber;
@@ -31,6 +33,8 @@ public class User {
         this.isActive = isActive;
         this.fullName = fullName;
         this.birthDate = birthDate;
+        this.avatarData = avatarData;
+        this.avatarExtension = avatarExtension;
     }
 
     public User() { }
@@ -59,12 +63,16 @@ public class User {
         return fullName;
     }
     
-    public LocalDate getBirthDate() {
+    public String getBirthDate() {
         return birthDate;
     }
-    
-    public String getAvatarUrl() {
-        return avatarUrl;
+
+    public String getAvatarData() {
+        return avatarData;
+    }
+
+    public String getAvatarExtension() {
+        return avatarExtension;
     }
 
     public void setUsername(String username) {
@@ -91,11 +99,15 @@ public class User {
         this.fullName = fullName;
     }
 
-    public void setBirthDate(LocalDate birthDate) {
+    public void setBirthDate(String birthDate) {
         this.birthDate = birthDate;
     }
 
-    public void setAvatarUrl(String avatarUrl) {
-        this.avatarUrl = avatarUrl;
+    public void setAvatarData(String avatarData) {
+        this.avatarData = avatarData;
+    }
+
+    public void setAvatarExtension(String avatarExtension) {
+        this.avatarExtension = avatarExtension;
     }
 }
