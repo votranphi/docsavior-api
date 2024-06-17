@@ -17,13 +17,13 @@ import org.springframework.web.bind.annotation.PostMapping;
 @RequestMapping(value = "/newsfeed")
 public class NewsfeedController {
     @Autowired
-    NewsfeedService newfeedService = new NewsfeedService();
+    NewsfeedService newsfeedService = new NewsfeedService();
 
     @GetMapping("/all")
     public ResponseEntity<?> getAllPosts() {
-        var allPosts = newfeedService.getAllPosts();
+        var allPosts = newsfeedService.getAllPosts();
 
-        if (newfeedService.isEmpty()) {
+        if (newsfeedService.isEmpty()) {
             return new ResponseEntity<>(new Detail("There's no post to show!"), HttpStatusCode.valueOf(600));
         }
 
@@ -54,7 +54,7 @@ public class NewsfeedController {
         Newsfeed newNewsfeed = new Newsfeed(username, postDescription, postContent, newsfeedFileData, newsfeedFileExtension);
 
         // save newNewsfeed
-        newfeedService.saveNewNewsfeed(newNewsfeed);
+        newsfeedService.saveNewNewsfeed(newNewsfeed);
         
         return ResponseEntity.ok(new Detail("Post successfully!"));
     }
