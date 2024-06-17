@@ -34,7 +34,7 @@ public class UserController {
     UserService userService = new UserService();
 
     @PostMapping("/add")
-    public @ResponseBody ResponseEntity<?> postSignUp(@RequestParam String username, @RequestParam String email, @RequestParam String phoneNumber, @RequestParam String password) {
+    public @ResponseBody ResponseEntity<?> postSignUp(@RequestParam String username, @RequestParam String email, @RequestParam String phoneNumber, @RequestParam String password, @RequestParam String fullName, @RequestParam String birthDate) {
         // check if the email is valid
         Pattern pattern = Pattern.compile(".+@gmail.com$");
         Matcher matcher = pattern.matcher(email);
@@ -47,9 +47,6 @@ public class UserController {
         if (phoneNumber.length() != 10 || phoneNumber.charAt(0) != '0') {
             return new ResponseEntity<>(new Detail("Phone number is invalid!"), HttpStatusCode.valueOf(600));
         }
-
-        // create new user
-        User newUser = new User(username, email, phoneNumber, password, false);
 
         // check if the username is in table
         if (userService.doesUsernameExist(username)) {
@@ -65,6 +62,9 @@ public class UserController {
         if (userService.doesPhoneNumberExist(phoneNumber)) {
             return new ResponseEntity<>(new Detail("Phone number already exists!"), HttpStatusCode.valueOf(600));
         }
+
+        // create new user
+        User newUser = new User(username, email, phoneNumber, password, false, fullName, userService.convertToLocalDate(birthDate));
 
         // add new user to the database
         userService.saveNewUser(newUser);

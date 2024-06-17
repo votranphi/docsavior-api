@@ -4,11 +4,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-public class NewfeedService {
+public class NewsfeedService {
     @Autowired
-    NewfeedRepository newfeedRepository;
+    NewsfeedRepository newfeedRepository;
 
-    public Iterable<Newfeed> getAllPosts() {
+    public Iterable<Newsfeed> getAllPosts() {
         return newfeedRepository.findAll();
     }
 
@@ -16,7 +16,7 @@ public class NewfeedService {
         return newfeedRepository.count() == 0;
     }
 
-    public void saveNewPost(Newfeed newNewfeed) {
+    public void saveNewPost(Newsfeed newNewfeed) {
         newfeedRepository.save(newNewfeed);
     }
 }

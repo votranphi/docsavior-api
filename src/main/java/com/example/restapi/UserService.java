@@ -4,6 +4,8 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
 import jakarta.transaction.Transactional;
 
@@ -55,5 +57,11 @@ public class UserService {
         }
 
         return false;
+    }
+
+    public LocalDate convertToLocalDate(String date) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+        LocalDate localDate = LocalDate.parse(date, formatter);
+        return localDate;
     }
 }

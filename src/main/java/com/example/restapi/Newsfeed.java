@@ -6,7 +6,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 
 @Entity
-public class Newfeed {
+public class Newsfeed {
     @Id
     @GeneratedValue(strategy=GenerationType.AUTO)
     private Integer id;
@@ -23,7 +23,7 @@ public class Newfeed {
 
     private Integer commentNumber;
 
-    public Newfeed(String username, String postDescription, String postContent, Integer likeNumber, Integer dislikeNumber, Integer commentNumber) {
+    public Newsfeed(String username, String postDescription, String postContent, Integer likeNumber, Integer dislikeNumber, Integer commentNumber) {
         this.username = username;
         this.postDescription = postDescription;
         this.postContent = postContent;
@@ -32,7 +32,7 @@ public class Newfeed {
         this.commentNumber = commentNumber;
     }
 
-    public Newfeed() { }
+    public Newsfeed() { }
 
     public Integer getId() {
         return id;

@@ -13,10 +13,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 
 @RestController
-@RequestMapping(value = "/newfeed")
-public class NewfeedController {
+@RequestMapping(value = "/newsfeed")
+public class NewsfeedController {
     @Autowired
-    NewfeedService newfeedService = new NewfeedService();
+    NewsfeedService newfeedService = new NewsfeedService();
 
     @GetMapping("/all")
     public ResponseEntity<?> getAllPosts() {
@@ -28,7 +28,7 @@ public class NewfeedController {
 
         JSONArray jsonArray = new JSONArray();
 
-        for (Newfeed i : allPosts) {
+        for (Newsfeed i : allPosts) {
             JSONObject jsonObject = new JSONObject();
             jsonObject.put("username", i.getUsername());
             jsonObject.put("postDescription", i.getPostDescription());
@@ -46,11 +46,11 @@ public class NewfeedController {
     @PostMapping("/add")
     public String postPost() {
         // create fake dataset
-        Newfeed newfeed1 = new Newfeed("votranphi", "Cách chơi bài luôn thắng", "ABCDEFG", 100, 200, 300);
-        Newfeed newfeed2 = new Newfeed("votranphi1", "Toán học 12", "ABCDEFG", 1, 2, 3);
-        Newfeed newfeed3 = new Newfeed("votranphi2", "Ngữ văn 9", "ABCDEFG", 0, 0, 0);
-        Newfeed newfeed4 = new Newfeed("votranphi3", "Đắc nhân tâm", "ABCDEFG", 6, 5, 4);
-        Newfeed newfeed5 = new Newfeed("votranphi4", "Hạt giống tâm hồn", "ABCDEFG", 4, 5, 5);
+        Newsfeed newfeed1 = new Newsfeed("votranphi", "Cách chơi bài luôn thắng", "ABCDEFG", 100, 200, 300);
+        Newsfeed newfeed2 = new Newsfeed("votranphi1", "Toán học 12", "ABCDEFG", 1, 2, 3);
+        Newsfeed newfeed3 = new Newsfeed("votranphi2", "Ngữ văn 9", "ABCDEFG", 0, 0, 0);
+        Newsfeed newfeed4 = new Newsfeed("votranphi3", "Đắc nhân tâm", "ABCDEFG", 6, 5, 4);
+        Newsfeed newfeed5 = new Newsfeed("votranphi4", "Hạt giống tâm hồn", "ABCDEFG", 4, 5, 5);
 
         newfeedService.saveNewPost(newfeed1);
         newfeedService.saveNewPost(newfeed2);

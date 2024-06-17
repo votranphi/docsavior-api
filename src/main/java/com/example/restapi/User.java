@@ -2,6 +2,7 @@ package com.example.restapi;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
+import java.time.LocalDate;
 
 @Entity
 public class User {
@@ -16,12 +17,20 @@ public class User {
 
     private boolean isActive;
 
-    public User(String username, String email, String phoneNumber, String password, boolean isActive) {
+    private String fullName;
+
+    private LocalDate birthDate;
+
+    private String avatarUrl;
+
+    public User(String username, String email, String phoneNumber, String password, boolean isActive, String fullName, LocalDate birthDate) {
         this.username = username;
         this.email = email;
         this.phoneNumber = phoneNumber;
         this.password = password;
         this.isActive = isActive;
+        this.fullName = fullName;
+        this.birthDate = birthDate;
     }
 
     public User() { }
@@ -46,6 +55,18 @@ public class User {
         return isActive;
     }
 
+    public String getFullName() {
+        return fullName;
+    }
+    
+    public LocalDate getBirthDate() {
+        return birthDate;
+    }
+    
+    public String getAvatarUrl() {
+        return avatarUrl;
+    }
+
     public void setUsername(String username) {
         this.username = username;
     }
@@ -64,5 +85,17 @@ public class User {
 
     public void setIsActive(boolean isActive) {
         this.isActive = isActive;
+    }
+
+    public void setFullName(String fullName) {
+        this.fullName = fullName;
+    }
+
+    public void setBirthDate(LocalDate birthDate) {
+        this.birthDate = birthDate;
+    }
+
+    public void setAvatarUrl(String avatarUrl) {
+        this.avatarUrl = avatarUrl;
     }
 }
