@@ -2,7 +2,6 @@ package com.example.restapi;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
-import java.time.LocalDate;
 
 @Entity
 public class User {

@@ -4,8 +4,6 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 
 import jakarta.transaction.Transactional;
 
@@ -15,6 +13,7 @@ public class UserService {
     @Autowired
     private UserRepository userRepository;
 
+    // function to do updating password to the User table
     @Transactional
     public void updatePassword(String username, String password) {
         userRepository.findById(username).map(target -> {
@@ -23,18 +22,22 @@ public class UserService {
         });
     }
 
+    // function to get user base on it's id
     public Optional<User> getUserById(String username) {
         return userRepository.findById(username);
     }
 
+    // function to save new user to User table
     public void saveNewUser(User newUser) {
         userRepository.save(newUser);
     }
 
+    // function to check if the username is in the User table
     public boolean doesUsernameExist(String username) {
         return !userRepository.findById(username).isEmpty();
     }
 
+    // function to check if the email is in the User table
     public boolean doesEmailExist(String email) {
         var allUsers = userRepository.findAll();
 
@@ -47,6 +50,7 @@ public class UserService {
         return false;
     }
 
+    // function to check if the phoneNumber is in the User table
     public boolean doesPhoneNumberExist(String phoneNumber) {
         var allUsers = userRepository.findAll();
 
@@ -59,6 +63,7 @@ public class UserService {
         return false;
     }
 
+    // funtion to random an interger between min and max
     public int myRandom(int min, int max) {
         return (int)(Math.random() * (max - min + 0.99) + min);
     }
