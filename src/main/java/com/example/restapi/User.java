@@ -20,20 +20,23 @@ public class User {
 
     private String birthDate;
 
+    private boolean gender; // male is 1 and female is 0
+
     private String avatarData;
 
     private String avatarExtension;
 
-    public User(String username, String email, String phoneNumber, String password, boolean isActive, String fullName, String birthDate, String avatarData, String avatarExtension) {
+    public User(String username, String email, String phoneNumber, String password, String fullName, String birthDate, boolean gender) {
         this.username = username;
         this.email = email;
         this.phoneNumber = phoneNumber;
         this.password = password;
-        this.isActive = isActive;
+        this.isActive = false;
         this.fullName = fullName;
         this.birthDate = birthDate;
-        this.avatarData = avatarData;
-        this.avatarExtension = avatarExtension;
+        this.gender = gender;
+        this.avatarData = "";
+        this.avatarExtension = "";
     }
 
     public User() { }
@@ -64,6 +67,10 @@ public class User {
     
     public String getBirthDate() {
         return birthDate;
+    }
+
+    public boolean getGender() {
+        return gender;
     }
 
     public String getAvatarData() {
@@ -100,6 +107,10 @@ public class User {
 
     public void setBirthDate(String birthDate) {
         this.birthDate = birthDate;
+    }
+
+    public void setGender(boolean gender) {
+        this.gender = gender;
     }
 
     public void setAvatarData(String avatarData) {

@@ -38,7 +38,7 @@ public class UserController {
     public static final int NUMBER_OF_RANDOM_PASSWORD_CHARACTER = 6;
 
     @PostMapping("/add")
-    public @ResponseBody ResponseEntity<?> postSignUp(@RequestParam String username, @RequestParam String email, @RequestParam String phoneNumber, @RequestParam String password, @RequestParam String fullName, @RequestParam String birthDate, @RequestParam String avatarData, @RequestParam String avatarExtension) {
+    public @ResponseBody ResponseEntity<?> postSignUp(@RequestParam String username, @RequestParam String email, @RequestParam String phoneNumber, @RequestParam String password, @RequestParam String fullName, @RequestParam String birthDay, @RequestParam boolean gender) {
         // check if the email is valid
         Pattern pattern = Pattern.compile(".+@gmail.com$");
         Matcher matcher = pattern.matcher(email);
@@ -68,7 +68,7 @@ public class UserController {
         }
 
         // create new user
-        User newUser = new User(username, email, phoneNumber, password, false, fullName, birthDate, avatarData, avatarExtension);
+        User newUser = new User(username, email, phoneNumber, password, fullName, birthDay, gender);
 
         // add new user to the database
         userService.saveNewUser(newUser);
