@@ -26,7 +26,7 @@ public class Messages {
     {
         this.idSender = idSender;
         this.idReceiver = idReceiver;
-        this.messageContent = messageContent         
+        this.messageContent = messageContent;      
         this.time = time;
     }
 
