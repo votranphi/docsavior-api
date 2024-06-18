@@ -23,14 +23,14 @@ public class User {
     private boolean gender; // male is 1 and female is 0
 
     private String avatarData;
-
+ 
     private String avatarExtension;
 
     public User(String username, String email, String phoneNumber, String password, String fullName, String birthDate, boolean gender) {
         this.username = username;
         this.email = email;
         this.phoneNumber = phoneNumber;
-        this.password = password;
+        this.password = password; 
         this.isActive = false;
         this.fullName = fullName;
         this.birthDate = birthDate;

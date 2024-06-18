@@ -13,13 +13,13 @@ public class Newsfeed {
 
     private String username;
 
-    private String postDescription;
+    private String postDescription;    
 
     private String postContent;
+         
+    private Integer likeNumber;                                 
 
-    private Integer likeNumber;
-
-    private Integer dislikeNumber;
+    private Integer dislikeNumber; 
 
     private Integer commentNumber;
 
