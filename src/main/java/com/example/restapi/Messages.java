@@ -79,6 +79,6 @@ public class Messages {
 
     public void setTime(String time)
     {
-        this.time = time ;
+        this.time = time;
     }
 }
