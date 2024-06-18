@@ -168,7 +168,7 @@ public class UserController {
     }
 
     @GetMapping("/me")
-    public ResponseEntity<?> getMethodName(@RequestParam String username) {
+    public ResponseEntity<?> getMe(@RequestParam String username) {
         var user = userService.getUserById(username);
 
         if (user.isEmpty()) {
