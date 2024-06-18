@@ -17,7 +17,7 @@ public class Messages {
 
     private String messageContent;
 
-    //private Integer idGroup;
+    //private Integer idGroup;                            
     //This is may be no need because if it is a group, then id will be the Group ID
 
     private String time;
@@ -26,7 +26,7 @@ public class Messages {
     {
         this.idSender = idSender;
         this.idReceiver = idReceiver;
-        this.messageContent = messageContent
+        this.messageContent = messageContent         
         this.time = time;
     }
 
