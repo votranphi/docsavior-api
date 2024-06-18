@@ -24,7 +24,7 @@ public class Newsfeed {
     private Integer commentNumber;
 
     private String newsfeedFileData;
-
+ 
     private String newsfeedFileExtension;
 
     public Newsfeed(String username, String postDescription, String postContent, String newsfeedFileData, String newsfeedFileExtension) {
