@@ -1,7 +1,9 @@
 package com.example.restapi;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
+import jakarta.persistence.Lob;
 
 @Entity
 public class User {
@@ -22,7 +24,11 @@ public class User {
 
     private boolean gender; // male is 1 and female is 0
 
+    // Two annotations below set the column's data type is LONGTEXT (store up to 4GB string)
+    @Lob @Column(length = 16777216)
     private String avatarData;
+
+    private String avatarName;
  
     private String avatarExtension;
 
@@ -36,6 +42,7 @@ public class User {
         this.birthDate = birthDate;
         this.gender = gender;
         this.avatarData = "";
+        this.avatarName = "";
         this.avatarExtension = "";
     }
 
@@ -77,6 +84,10 @@ public class User {
         return avatarData;
     }
 
+    public String getAvatarName() {
+        return avatarName;
+    }
+
     public String getAvatarExtension() {
         return avatarExtension;
     }
@@ -115,6 +126,10 @@ public class User {
 
     public void setAvatarData(String avatarData) {
         this.avatarData = avatarData;
+    }
+
+    public void setAvatarName(String avatarName) {
+        this.avatarName = avatarName;
     }
 
     public void setAvatarExtension(String avatarExtension) {

@@ -1,9 +1,11 @@
 package com.example.restapi;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.Lob;
 
 @Entity
 public class Newsfeed {
@@ -23,19 +25,24 @@ public class Newsfeed {
 
     private Integer commentNumber;
 
-    private String newsfeedFileData;
- 
-    private String newsfeedFileExtension;
+    // Two annotations below set the column's data type is LONGTEXT (store up to 4GB string)
+    @Lob @Column(length = 16777216)
+    private String fileData;
 
-    public Newsfeed(String username, String postDescription, String postContent, String newsfeedFileData, String newsfeedFileExtension) {
+    private String fileName;
+ 
+    private String fileExtension;
+
+    public Newsfeed(String username, String postDescription, String postContent, String fileData, String fileName, String fileExtension) {
         this.username = username;
         this.postDescription = postDescription;
         this.postContent = postContent;
         this.likeNumber = 0;
         this.dislikeNumber = 0;
         this.commentNumber = 0;
-        this.newsfeedFileData = newsfeedFileData;
-        this.newsfeedFileExtension = newsfeedFileExtension;
+        this.fileData = fileData;
+        this.fileName = fileName;
+        this.fileExtension = fileExtension;
     }
 
     public Newsfeed() { }
@@ -68,12 +75,16 @@ public class Newsfeed {
         return commentNumber;
     }
 
-    public String getNewsfeedFileData() {
-        return newsfeedFileData;
+    public String getFileData() {
+        return fileData;
     }
 
-    public String getNewsfeedFileExtension() {
-        return newsfeedFileExtension;
+    public String getFileName() {
+        return fileName;
+    }
+
+    public String getFileExtension() {
+        return fileExtension;
     }
 
     public void setId(Integer id) {
@@ -104,11 +115,15 @@ public class Newsfeed {
         this.commentNumber = commentNumber;
     }
     
-    public void setNewsfeedFileData(String newsfeedFileData) {
-        this.newsfeedFileData = newsfeedFileData;
+    public void setFileData(String fileData) {
+        this.fileData = fileData;
     }
 
-    public void setNewsfeedFileExtension(String newsfeedFileExtension) {
-        this.newsfeedFileExtension = newsfeedFileExtension;
+    public void setFileName(String fileName) {
+        this.fileName = fileName;
+    }
+
+    public void setFileExtension(String fileExtension) {
+        this.fileExtension = fileExtension;
     }
 }

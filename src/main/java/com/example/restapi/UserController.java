@@ -82,6 +82,7 @@ public class UserController {
 
         if (!thisUser.isEmpty()) {
             if (password.equals(thisUser.get().getPassword())) {
+                userService.updateIsActive(username, true);
                 return new ResponseEntity<>(new Detail("Login successfully!"), HttpStatusCode.valueOf(200));
             } else {
                 return new ResponseEntity<>(new Detail("Wrong password!"), HttpStatusCode.valueOf(600));
@@ -89,6 +90,13 @@ public class UserController {
         }
 
         return new ResponseEntity<>(new Detail("Username doesn't exist!"), HttpStatusCode.valueOf(600));
+    }
+
+    @PostMapping("/logout")
+    public @ResponseBody ResponseEntity<?> postLogout(@RequestParam String username) {
+        userService.updateIsActive(username, false);
+
+        return ResponseEntity.ok(new Detail("Logout successfully!"));
     }
 
     @PostMapping("/password_recovery")

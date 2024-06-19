@@ -38,8 +38,9 @@ public class NewsfeedController {
             jsonObject.put("likeNumber", i.getLikeNumber());
             jsonObject.put("dislikeNumber", i.getDislikeNumber());
             jsonObject.put("commentNumber", i.getCommentNumber());
-            jsonObject.put("newsfeedFileData", i.getNewsfeedFileData());
-            jsonObject.put("newsfeedFileExtension", i.getNewsfeedFileExtension());
+            jsonObject.put("fileData", i.getFileData());
+            jsonObject.put("fileName", i.getFileName());
+            jsonObject.put("fileExtension", i.getFileExtension());
 
             jsonArray.put(jsonObject);
         }
@@ -48,10 +49,10 @@ public class NewsfeedController {
     }
 
     @PostMapping("/add")
-    public ResponseEntity<?> postPost(@RequestParam String username, @RequestParam String postDescription, @RequestParam String postContent, @RequestParam String newsfeedFileData, @RequestParam String newsfeedFileExtension) {
+    public ResponseEntity<?> postPost(@RequestParam String username, @RequestParam String postDescription, @RequestParam String postContent, @RequestParam String fileData, @RequestParam String fileName, @RequestParam String fileExtension) {
         
         // create new Newsfeed entity
-        Newsfeed newNewsfeed = new Newsfeed(username, postDescription, postContent, newsfeedFileData, newsfeedFileExtension);
+        Newsfeed newNewsfeed = new Newsfeed(username, postDescription, postContent, fileData, fileName, fileExtension);
 
         // save newNewsfeed
         newsfeedService.saveNewNewsfeed(newNewsfeed);

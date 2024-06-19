@@ -22,6 +22,15 @@ public class UserService {
         });
     }
 
+    // function to do updating active status to the User table
+    @Transactional
+    public void updateIsActive(String username, boolean isActive) {
+        userRepository.findById(username).map(target -> {
+            target.setIsActive(isActive);;
+            return target; 
+        });
+    }
+
     // function to get user base on it's id
     public Optional<User> getUserById(String username) {
         return userRepository.findById(username);

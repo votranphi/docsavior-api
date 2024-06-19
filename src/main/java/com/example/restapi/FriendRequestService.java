@@ -5,6 +5,8 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import jakarta.transaction.Transactional;
+
 @Service
 public class FriendRequestService {
     @Autowired
@@ -18,5 +20,10 @@ public class FriendRequestService {
     public void saveNewFriendRequest(String username, String requester) {
         FriendRequest friendRequest = new FriendRequest(username, requester);
         friendRequestRepository.save(friendRequest);
+    }
+    
+    @Transactional
+    public void deleteFriendRequest(String username, String requester) {
+        friendRequestRepository.deleteFriendRequestByUsernameAndRequester(username, requester);
     }
 }

@@ -6,6 +6,7 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -37,5 +38,12 @@ public class FriendRequestController {
         friendRequestService.saveNewFriendRequest(username, requester);
 
         return ResponseEntity.ok(new Detail("Friend request saved successfully!"));
+    }
+
+    @DeleteMapping("/delete")
+    public ResponseEntity<?> deleteFriendRequest(@RequestParam String username, @RequestParam String requester) {
+        friendRequestService.deleteFriendRequest(username, requester);
+
+        return ResponseEntity.ok(new Detail("Friend request deleted successfully!"));
     }
 }
