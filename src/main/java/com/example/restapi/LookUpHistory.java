@@ -2,8 +2,6 @@ package com.example.restapi;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
 
 @Entity
 public class LookUpHistory {
@@ -15,7 +13,7 @@ public class LookUpHistory {
     public LookUpHistory(String username, String lookUpInfo)
     {
         this.username = username;
-        this.LookUpInfo = lookUpInfo;
+        this.lookUpInfo = lookUpInfo;
     }
 
     public LookUpHistory() { }

@@ -1,27 +1,27 @@
 package com.example.restapi;
 
 import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
 
 @Entity
-public class Friend {
+public class FriendRequest {
     @Id
     @GeneratedValue(strategy=GenerationType.AUTO)
     private Integer id;
 
     private String username;
 
-    private String usernameFriend;
+    private String requester;
 
-    public Friend (String username, String usernameFriend)
+    public FriendRequest(String username, String requester)
     {
         this.username = username;
-        this.usernameFriend = usernameFriend;
+        this.requester = requester;
     }
 
-    public Friend() { }
+    public FriendRequest() { }
 
     public Integer getId() {
         return id;
@@ -31,8 +31,8 @@ public class Friend {
         return username;
     }
 
-    public String getUsernameFriend() {
-        return usernameFriend;
+    public String getRequester() {
+        return requester;
     }
 
     public void setId(Integer id) {
@@ -43,7 +43,7 @@ public class Friend {
         this.username = username;
     }
 
-    public void setUsernameFriend(String usernameFriend) {
-        this.usernameFriend = usernameFriend;
+    public void setRequester(String requester) {
+        this.requester = requester;
     }
 }

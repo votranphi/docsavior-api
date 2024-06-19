@@ -1,20 +1,22 @@
+package com.example.restapi;
+
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 @Service
 public class FriendService {
-
     @Autowired
     private FriendRepository friendRepository;
 
-    public List<String> getFriendsByUsername(String username) {
-        List<String> friendsAsUser = friendRepository.findFriendsByUsername(username);
-        List<String> friendsAsFriend = friendRepository.findFriendsByFriendUsername(username);
-        return Stream.concat(friendsAsUser.stream(), friendsAsFriend.stream())
-                .distinct()
-                .collect(Collectors.toList());
+    // find all username's friends
+    public List<String> findFriendsByUsername(String username) {
+        return friendRepository.findFriendsByUsername(username);
+    }
+
+    public void saveNewFriend(String username, String usernameFriend) {
+        Friend friend = new Friend(username, usernameFriend);
+        friendRepository.save(friend);
     }
 }
