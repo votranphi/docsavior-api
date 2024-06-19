@@ -13,7 +13,7 @@ public class Notification {
 
     private String time;
 
-    private String type; //add friend, like, comment
+    private String type; // "like" or "comment"
 
     private Integer idAddFriend; // can NULL
 
@@ -40,6 +40,10 @@ public class Notification {
         return time;
     }
 
+    public String getType() {
+        return type;
+    }
+
     public Integer getIdAddFriend()
     {
         return idAddFriend;
@@ -58,6 +62,10 @@ public class Notification {
     public void setTime(String time)
     {
         this.time = time;
+    }
+
+    public void setType(String type) {
+        this.type = type;
     }
 
     public void setIdAddFriend(Integer idAddFriend)

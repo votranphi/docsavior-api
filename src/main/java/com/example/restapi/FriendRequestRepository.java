@@ -8,8 +8,6 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
-import jakarta.transaction.Transactional;
-
 @Repository
 public interface FriendRequestRepository extends JpaRepository<FriendRequest, Integer> {
     @Query("SELECT f.requester FROM FriendRequest f WHERE f.username = :username")
