@@ -1,7 +1,12 @@
 package com.example.restapi;
 
-import org.springframework.data.repository.CrudRepository;
+import java.util.List;
 
-public interface FriendRequestRepository extends CrudRepository<Friend, Integer> {
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 
+public interface FriendRequestRepository extends JpaRepository<FriendRequest, Integer> {
+    @Query("SELECT f.requester FROM FriendRequest f WHERE f.username = :username")
+    List<String> findRequestersByUsername(@Param("username") String username);
 }

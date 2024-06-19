@@ -10,9 +10,9 @@ public class FriendRequest {
     @Id
     @GeneratedValue(strategy=GenerationType.AUTO)
     private Integer id;
-
+    
     private String username;
-
+    
     private String requester;
 
     public FriendRequest(String username, String requester)

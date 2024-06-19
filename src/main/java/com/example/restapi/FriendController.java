@@ -38,5 +38,4 @@ public class FriendController {
 
         return ResponseEntity.ok(new Detail("Friend saved successfully!"));
     }
-    
 }
