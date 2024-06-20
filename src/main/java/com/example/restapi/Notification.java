@@ -9,44 +9,47 @@ import jakarta.persistence.GenerationType;
 public class Notification {
     @Id
     @GeneratedValue(strategy=GenerationType.AUTO)
-    private Integer idNotification;
+    private Integer idNotification;// Notification's id
 
-    private String time;
+    private String username; //username of this account
 
-    private String type; // "like" or "comment"
+    private Integer type; // like=0, comment=1, friendRequest=2
 
-    private Integer idAddFriend; // can NULL
+    private Integer idPost;// post's id. This can be NULL if type is 2
 
-    private Integer idPost; // can NULL
+    private String userInteract; // username of the person who interact with post or send a request
 
 
-    public Notification(String time, String type, Integer idAddFriend, Integer idPost)
+    public Notification(String username, Integer type,  Integer idPost, String userInteract)
     {
-        this.time = time;
+        this.username = username;
         this.type = type;
-        this.idAddFriend = idAddFriend;
         this.idPost = idPost;
+        this.userInteract = userInteract;
+    }
+
+    public Notification(String username, Integer type, String userInteract)
+    {
+        this.username = username;
+        this.type = type;
+        this.userInteract = userInteract;
     }
 
     public Notification() { }
+
 
     public Integer getIdNotification()
     {
         return idNotification;
     }
 
-    public String getTime()
+    public String getUsername()
     {
-        return time;
+        return username;
     }
 
-    public String getType() {
+    public Integer getType() {
         return type;
-    }
-
-    public Integer getIdAddFriend()
-    {
-        return idAddFriend;
     }
 
     public Integer getIdPost()
@@ -54,28 +57,33 @@ public class Notification {
         return idPost;
     }
 
+    public String getUserInteract()
+    {
+        return userInteract;
+    }
+
     public void setIdNotification(Integer idNotification)
     {
         this.idNotification = idNotification;
     }
 
-    public void setTime(String time)
+    public void setUsername(String username)
     {
-        this.time = time;
+        this.username = username;
     }
 
-    public void setType(String type) {
+    public void setType(Integer type) {
         this.type = type;
-    }
-
-    public void setIdAddFriend(Integer idAddFriend)
-    {
-        this.idAddFriend = idAddFriend;
     }
 
     public void setIdPost(Integer idPost)
     {
         this.idPost = idPost;
+    }
+
+    public void setUserInteract(String userInteract)
+    {
+        this.userInteract = userInteract;
     }
 
      
