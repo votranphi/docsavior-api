@@ -27,6 +27,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.json.JSONObject;
+import org.springframework.web.bind.annotation.RequestBody;
+
 
 
 @RestController
@@ -195,5 +197,17 @@ public class UserController {
 
             return ResponseEntity.ok(jsonObject.toString());
         }
+    }
+
+    @PostMapping("/password_change")
+    public ResponseEntity<?> postPasswordChange(@RequestParam String username, @RequestParam String oldPassword, @RequestParam String newPassword) {
+        var user = userService.getUserById(username);
+
+        if (!user.get().getPassword().equals(oldPassword)) {
+            return new ResponseEntity<>(new Detail("Old password's wrong!"), HttpStatusCode.valueOf(600));
+        }
+        
+        userService.updatePassword(username, newPassword);
+        return ResponseEntity.ok(new Detail("Password changed successfully!"));
     }
 }
