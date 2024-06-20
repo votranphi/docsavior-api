@@ -9,7 +9,7 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface NotificationRepository extends JpaRepository<Notification, Integer>{
-    @Query("SELECT f FROM Notification f WHERE f.username =: username")
+    @Query("SELECT f FROM Notification f WHERE f.username = :username")
     List<Notification> findNotificationByUsername(@Param("username") String username);
 
 }

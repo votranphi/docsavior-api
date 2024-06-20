@@ -27,15 +27,18 @@ public class NotificationController {
         
         List<Notification> notifications = notificationService.findNotificationByUsername(username);
 
-        JSONObject jsonObject = new JSONObject();
         JSONArray jsonArray = new JSONArray();
         for (Notification i : notifications)
         {
-            jsonArray.put(i);
+            JSONObject jsonObject = new JSONObject();
+            jsonObject.put("id", i.getIdNotification());
+            jsonObject.put("username", i.getUsername());
+            jsonObject.put("type", i.getType());
+            jsonObject.put("idPost", i.getIdPost());
+            jsonObject.put("usernameInteract", i.getUserInteract());
+            jsonArray.put(jsonObject);
         }
-        jsonObject.put("notifications", jsonArray);
-
-        return ResponseEntity.ok(jsonObject.toString());
+        return ResponseEntity.ok(jsonArray.toString());
 
     }
     
