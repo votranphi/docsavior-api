@@ -195,7 +195,7 @@ public class UserController {
             // jsonObject.put("password", user.get().getPassword());
             jsonObject.put("isActive", user.get().getIsActive());
             jsonObject.put("fullName", user.get().getFullName());
-            jsonObject.put("birthDate", user.get().getBirthDate().toString());
+            jsonObject.put("birthDate", user.get().getBirthDate());
             jsonObject.put("gender", user.get().getGender());
             jsonObject.put("avatarData", user.get().getAvatarData());
             jsonObject.put("avatarName", user.get().getAvatarName());
@@ -233,7 +233,7 @@ public class UserController {
         String lowercasedLKI = lookUpInfo.toLowerCase().trim();
 
         // split the string to do the searching
-        String[] spl = lowercasedLKI.split(" ");
+        String[] spl = lowercasedLKI.split("\s");
 
         // init the foundUsers which stores found users
         List<User> foundUsers = new ArrayList<>();
@@ -261,10 +261,10 @@ public class UserController {
             temp.put("username", i.getUsername());
             temp.put("email", i.getEmail());
             temp.put("phoneNumber", i.getPhoneNumber());
-            // temp.put("password", igetPassword());
+            // temp.put("password", i.getPassword());
             temp.put("isActive", i.getIsActive());
             temp.put("fullName", i.getFullName());
-            temp.put("birthDate", i.getBirthDate().toString());
+            temp.put("birthDate", i.getBirthDate());
             temp.put("gender", i.getGender());
             temp.put("avatarData", i.getAvatarData());
             temp.put("avatarName", i.getAvatarName());
