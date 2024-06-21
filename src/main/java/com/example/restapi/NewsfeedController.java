@@ -59,5 +59,37 @@ public class NewsfeedController {
         
         return ResponseEntity.ok(new Detail("Post successfully!"));
     }
+
+    @PostMapping("/like")
+    public ResponseEntity<?> postLike(@RequestParam Integer id)
+    {
+        newsfeedService.updateLikeNumber(id);
+
+        return ResponseEntity.ok("Like successfully!");
+    }
+
+    @PostMapping("/unlike")
+    public ResponseEntity<?> postUnlike(@RequestParam Integer id)
+    {
+        newsfeedService.updateUnlikeNumber(id);
+
+        return ResponseEntity.ok("Unlike successfully!");
+    }
+
+    @PostMapping("/dislike")
+    public ResponseEntity<?> postDislike(@RequestParam Integer id)
+    {
+        newsfeedService.updateDislikeNumber(id);
+
+        return ResponseEntity.ok("Dislike successfully!");
+    }
+
+    @PostMapping("/undislike")
+    public ResponseEntity<?> postUndislike(@RequestParam Integer id)
+    {
+        newsfeedService.updateUndislikeNumber(id);
+
+        return ResponseEntity.ok("Like successfully!");
+    }
     
 }   

@@ -2,6 +2,7 @@ package com.example.restapi;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class NewsfeedService {
@@ -21,5 +22,41 @@ public class NewsfeedService {
     // function to save new Newsfeed to Newsfeed table
     public void saveNewNewsfeed(Newsfeed newnewsfeed) {
         newsfeedRepository.save(newnewsfeed);
+    }
+
+    @Transactional
+    public void updateLikeNumber(Integer id)
+    {
+        newsfeedRepository.findById(id).map(target -> {
+            target.setLikeNumber(target.getLikeNumber()+1);
+            return target;
+        });
+    }
+
+    @Transactional 
+    public void updateDislikeNumber(Integer id)
+    {
+        newsfeedRepository.findById(id).map(target -> {
+            target.setDislikeNumber(target.getDislikeNumber()+1);
+            return target;
+        });
+    }
+
+    @Transactional
+    public void updateUnlikeNumber(Integer id)
+    {
+        newsfeedRepository.findById(id).map(target -> {
+            target.setLikeNumber(target.getLikeNumber()-1);
+            return target;
+        });
+    }
+
+    @Transactional 
+    public void updateUndislikeNumber(Integer id)
+    {
+        newsfeedRepository.findById(id).map(target -> {
+            target.setDislikeNumber(target.getDislikeNumber()-1);
+            return target;
+        });
     }
 }
