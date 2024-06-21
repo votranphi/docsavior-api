@@ -65,7 +65,7 @@ public class NewsfeedController {
     {
         newsfeedService.updateLikeNumber(id);
 
-        return ResponseEntity.ok("Like successfully!");
+        return ResponseEntity.ok(1);
     }
 
     @PostMapping("/unlike")
@@ -73,7 +73,7 @@ public class NewsfeedController {
     {
         newsfeedService.updateUnlikeNumber(id);
 
-        return ResponseEntity.ok("Unlike successfully!");
+        return ResponseEntity.ok(1);
     }
 
     @PostMapping("/dislike")
@@ -81,7 +81,7 @@ public class NewsfeedController {
     {
         newsfeedService.updateDislikeNumber(id);
 
-        return ResponseEntity.ok("Dislike successfully!");
+        return ResponseEntity.ok(1);
     }
 
     @PostMapping("/undislike")
@@ -89,7 +89,7 @@ public class NewsfeedController {
     {
         newsfeedService.updateUndislikeNumber(id);
 
-        return ResponseEntity.ok("Like successfully!");
+        return ResponseEntity.ok(1);
     }
     
 }   
