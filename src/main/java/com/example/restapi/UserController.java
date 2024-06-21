@@ -27,6 +27,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.json.JSONObject;
+import org.springframework.web.bind.annotation.RequestBody;
+
 
 
 @RestController
@@ -190,7 +192,9 @@ public class UserController {
             jsonObject.put("isActive", user.get().getIsActive());
             jsonObject.put("fullName", user.get().getFullName());
             jsonObject.put("birthDate", user.get().getBirthDate().toString());
+            jsonObject.put("gender", user.get().getGender());
             jsonObject.put("avatarData", user.get().getAvatarData());
+            jsonObject.put("avatarName", user.get().getAvatarName());
             jsonObject.put("avatarExtension", user.get().getAvatarExtension());
 
             return ResponseEntity.ok(jsonObject.toString());
@@ -208,4 +212,12 @@ public class UserController {
         userService.updatePassword(username, newPassword);
         return ResponseEntity.ok(new Detail("Password changed successfully!"));
     }
+
+    @PostMapping("/avatar")
+    public ResponseEntity<?> postAvatar(@RequestParam String username, @RequestParam String avatarData, @RequestParam String avatarName, @RequestParam String avatarExtension) {
+        userService.updateAvatar(username, avatarData, avatarName, avatarExtension);
+
+        return ResponseEntity.ok(new Detail("Avatar updated successfully!"));
+    }
+    
 }

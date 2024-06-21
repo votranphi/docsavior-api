@@ -31,6 +31,17 @@ public class UserService {
         });
     }
 
+    // function to do updating avatar to the User table
+    @Transactional
+    public void updateAvatar(String username, String avatarData, String avatarName, String avatarExtension) {
+        userRepository.findById(username).map(target -> {
+            target.setAvatarData(avatarData);
+            target.setAvatarName(avatarName);
+            target.setAvatarExtension(avatarExtension);
+            return target;
+        });
+    }
+
     // function to get user base on it's id
     public Optional<User> getUserById(String username) {
         return userRepository.findById(username);
