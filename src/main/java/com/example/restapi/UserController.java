@@ -20,13 +20,18 @@ import jakarta.mail.internet.MimeMultipart;
 import java.util.regex.Pattern;
 import java.util.Properties;
 import java.util.regex.Matcher;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.json.JSONArray;
 import org.json.JSONObject;
+import org.springframework.web.bind.annotation.RequestBody;
+
 
 
 
@@ -217,6 +222,61 @@ public class UserController {
         userService.updateAvatar(username, avatarData, avatarName, avatarExtension);
 
         return ResponseEntity.ok(new Detail("Avatar updated successfully!"));
+    }
+    
+    @PostMapping("/look_up")
+    public ResponseEntity<?> postLookUpUser(@RequestParam String lookUpInfo) {
+        // get all users in database
+        Iterable<User> users = userService.findAllUsers();
+
+        // lowercase the lookUpInfo and remove the leading/trailing space if it has
+        String lowercasedLKI = lookUpInfo.toLowerCase().trim();
+
+        // split the string to do the searching
+        String[] spl = lowercasedLKI.split(" ");
+
+        // init the foundUsers which stores found users
+        List<User> foundUsers = new ArrayList<>();
+
+        // found user
+        for (User i : users) {
+            for (String j : spl) {
+                // add the user if it's contains at least one word of the lookUpInfo
+                if (i.getUsername().toLowerCase().contains(j) || i.getFullName().toLowerCase().contains(j)) {
+                    foundUsers.add(i);
+                    break;
+                }
+            }
+        }
+
+        // init a jsonObject
+        JSONObject jsonObject = new JSONObject();
+
+        // init a jsonArray
+        JSONArray jsonArray = new JSONArray();
+
+        // convert foundUsers to jsonArray
+        for (User i : foundUsers) {
+            JSONObject temp = new JSONObject();
+            temp.put("username", i.getUsername());
+            temp.put("email", i.getEmail());
+            temp.put("phoneNumber", i.getPhoneNumber());
+            // temp.put("password", igetPassword());
+            temp.put("isActive", i.getIsActive());
+            temp.put("fullName", i.getFullName());
+            temp.put("birthDate", i.getBirthDate().toString());
+            temp.put("gender", i.getGender());
+            temp.put("avatarData", i.getAvatarData());
+            temp.put("avatarName", i.getAvatarName());
+            temp.put("avatarExtension", i.getAvatarExtension());
+
+            jsonArray.put(temp);
+        }
+
+        // put the jsonArray to jsonObject
+        jsonObject.put("foundUsers", jsonArray);
+
+        return ResponseEntity.ok(jsonObject.toString());
     }
     
 }

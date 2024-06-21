@@ -83,6 +83,11 @@ public class UserService {
         return false;
     }
 
+    // function to findAll in database
+    public Iterable<User> findAllUsers() {
+        return userRepository.findAll();
+    }
+
     // funtion to random an interger between min and max
     public int myRandom(int min, int max) {
         return (int)(Math.random() * (max - min + 0.99) + min);
