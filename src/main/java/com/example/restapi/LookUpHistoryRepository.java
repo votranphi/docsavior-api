@@ -15,6 +15,6 @@ public interface LookUpHistoryRepository extends JpaRepository<LookUpHistory, In
     List<String> findPostLookUpHistoryByUsername(@Param("username") String username);
 
     @Query("SELECT l.lookUpInfo FROM LookUpHistory l WHERE l.username = :username AND l.lookUpType = 2")
-    List<String> findFriendLookUpHistoryByUsername(@Param("username") String username);
+    List<String> findUserLookUpHistoryByUsername(@Param("username") String username);
 
 }
