@@ -20,7 +20,7 @@ public class LookUpHistoryService {
     }
 
     // method to get all the friend's LookUpHistory of a user by username
-    public List<String> findFriendLookUpHistoryByUsername(String username) {
-        return lookUpHistoryRepository.findFriendLookUpHistoryByUsername(username);
+    public List<String> findUserLookUpHistoryByUsername(String username) {
+        return lookUpHistoryRepository.findUserLookUpHistoryByUsername(username);
     }
 }

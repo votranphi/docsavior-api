@@ -49,8 +49,8 @@ public class LookUpHistoryController {
     }
     
     @GetMapping("/me/friend")
-    public ResponseEntity<?> getMyFriendLookUpHistory(@RequestParam String username) {
-        List<String> lookUpInfos = lookUpHistoryService.findFriendLookUpHistoryByUsername(username);
+    public ResponseEntity<?> getMyUserLookUpHistory(@RequestParam String username) {
+        List<String> lookUpInfos = lookUpHistoryService.findUserLookUpHistoryByUsername(username);
 
         JSONObject jsonObject = new JSONObject();
 
