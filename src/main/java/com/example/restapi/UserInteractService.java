@@ -1,6 +1,7 @@
 package com.example.restapi;
 
 import java.util.Optional;
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -22,14 +23,19 @@ public class UserInteractService {
         userInteractRepository.deleteInteractByUsernameAndIdPost(userInteract.getUsername(), userInteract.getIdPost());
     }
 
-    public boolean findInteractByUsernameAndIdPost(UserInteract userInteract)
+    public boolean findInteractByUsernameAndIdPost(String username, Integer idPost)
     {
-        Optional<UserInteract> Optional = userInteractRepository.findInteractByUsernameAndIdPost(userInteract.getUsername(), userInteract.getIdPost());
+        Optional<UserInteract> Optional = userInteractRepository.findInteractByUsernameAndIdPost(username, idPost);
         if (Optional.isPresent())
         {
             return true;    
         }
         return false;
+    }
+
+    public UserInteract findTypeInteractByUsername(String username, Integer idPost)
+    {
+        return userInteractRepository.findUserInteractByUsernameAndIdPost(username, idPost);
     }
 
 }

@@ -10,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
@@ -28,7 +29,7 @@ public class UserInteractController {
 
         if (userInteract.getType()) // Like
         {
-            if(userInteractService.findInteractByUsernameAndIdPost(userInteract)) //if find out
+            if(userInteractService.findInteractByUsernameAndIdPost(username, idPost)) //if find out
             {
                 userInteractService.deleteUserInteract(userInteract);
                 return ResponseEntity.ok(new Detail("UserInteract_like has been deleted successfully"));
@@ -38,7 +39,7 @@ public class UserInteractController {
         }
         else // Dislike
         {
-            if(userInteractService.findInteractByUsernameAndIdPost(userInteract)) // if find out
+            if(userInteractService.findInteractByUsernameAndIdPost(username, idPost)) // if find out
             {
                 userInteractService.deleteUserInteract(userInteract);
                 return ResponseEntity.ok(new Detail("UserInteract_dislike has been deleted successfully"));
@@ -47,8 +48,25 @@ public class UserInteractController {
             return ResponseEntity.ok(new Detail("UserInteract dislike successfully"));
         }
     }
-    
-    
+
+    @GetMapping("/likeordislike") // to see if user liked or disliked a post
+    public ResponseEntity<?> getIfLike(@RequestParam String username, @RequestParam Integer idPost)
+    {
+        if(userInteractService.findInteractByUsernameAndIdPost(username, idPost))
+        {
+            Boolean type = userInteractService.findTypeInteractByUsername(username, idPost).getType();
+
+            if(type)
+            {
+                return ResponseEntity.ok(new Detail("1"));
+            }
+            else if (!type)
+            {
+                return ResponseEntity.ok(new Detail("0"));
+            }
+        }
+        return ResponseEntity.ok(new Detail("didn't interact"));
+    }
 }
 
 
