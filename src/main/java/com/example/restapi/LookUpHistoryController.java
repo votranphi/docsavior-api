@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 
 
@@ -22,12 +23,22 @@ public class LookUpHistoryController {
     LookUpHistoryService lookUpHistoryService = new LookUpHistoryService();
 
     @PostMapping("/add")
-    public ResponseEntity<?> postMethodName(@RequestParam String username, @RequestParam String lookUpInfo, @RequestParam Integer lookUpType) {
+    public ResponseEntity<?> postLookUpHistory(@RequestParam String username, @RequestParam String lookUpInfo, @RequestParam Integer lookUpType) {
         LookUpHistory lookUpHistory = new LookUpHistory(username, lookUpInfo, lookUpType);
 
-        lookUpHistoryService.saveNewLookUpHistory(lookUpHistory);
+        // add look up history to database if it wasn't added
+        if (!lookUpHistoryService.isLookUpHistoryAdded(username, lookUpInfo, lookUpType)) {
+            lookUpHistoryService.saveNewLookUpHistory(lookUpHistory);
+        }
         
         return ResponseEntity.ok(new Detail("New lookup history saved successfully!"));
+    }
+    
+    @DeleteMapping("/delete")
+    public ResponseEntity<?> deleteLookUpHistory(@RequestParam String username, @RequestParam String lookUpInfo, @RequestParam Integer lookUpType) {
+        lookUpHistoryService.deleteLookUpHistory(username, lookUpInfo, lookUpType);
+
+        return ResponseEntity.ok(new Detail("New lookup history deleted successfully!"));
     }
 
     @GetMapping("/me/post")

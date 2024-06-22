@@ -4,6 +4,8 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import jakarta.transaction.Transactional;
+
 @Service
 public class LookUpHistoryService {
     @Autowired
@@ -22,5 +24,22 @@ public class LookUpHistoryService {
     // method to get all the friend's LookUpHistory of a user by username
     public List<String> findUserLookUpHistoryByUsername(String username) {
         return lookUpHistoryRepository.findUserLookUpHistoryByUsername(username);
+    }
+
+    // method to delete LookUpHistory
+    @Transactional
+    public void deleteLookUpHistory(String username, String lookUpInfo, Integer lookUpType) {
+        lookUpHistoryRepository.deleteLookUpHistoryByUsernameAndLookUpInfoAndLookUpType(username, lookUpInfo, lookUpType);
+    }
+
+    // method to check if the record is added to table
+    public boolean isLookUpHistoryAdded(String username, String lookUpInfo, Integer lookUpType) {
+        Integer numberOfLookUpHistoryMatched = lookUpHistoryRepository.findLookUpHistoryByUsernameAndLookUpInfoAndLookUpType(username, lookUpInfo, lookUpType);
+
+        if (numberOfLookUpHistoryMatched == 0) {
+            return false;
+        }
+
+        return true;
     }
 }
