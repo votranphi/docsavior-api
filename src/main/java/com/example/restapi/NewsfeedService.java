@@ -1,6 +1,7 @@
 package com.example.restapi;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -10,6 +11,11 @@ import org.springframework.transaction.annotation.Transactional;
 public class NewsfeedService {
     @Autowired
     NewsfeedRepository newsfeedRepository;
+
+    //function to get post by id
+    public Optional<Newsfeed> getNewsfeedById(Integer id) {
+        return newsfeedRepository.findById(id);
+    }
 
     // function to get all post from Newsfeed table
     public List<Newsfeed> getAllPosts() {

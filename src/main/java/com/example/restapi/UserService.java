@@ -42,6 +42,11 @@ public class UserService {
         });
     }
 
+    // function to get avatarData by username
+    public String getAvatarDataByUsername(String username) {
+        return userRepository.findAvatarDataByUsername(username);
+    }
+
     // function to get user base on it's id
     public Optional<User> getUserById(String username) {
         return userRepository.findById(username);

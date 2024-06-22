@@ -4,6 +4,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -152,6 +153,26 @@ public class NewsfeedController {
 
         return ResponseEntity.ok(jsonObject.toString());
     }
+
+    @GetMapping("/id")
+    public ResponseEntity<?> getMethodName(@RequestParam Integer id) {
+        Optional<Newsfeed> i = newsfeedService.getNewsfeedById(id);
+
+        JSONObject temp = new JSONObject();
+        temp.put("id", i.get().getId());
+        temp.put("username", i.get().getUsername());
+        temp.put("postDescription", i.get().getPostDescription());
+        temp.put("postContent", i.get().getPostContent());
+        temp.put("likeNumber", i.get().getLikeNumber());
+        temp.put("dislikeNumber", i.get().getDislikeNumber());
+        temp.put("commentNumber", i.get().getCommentNumber());
+        temp.put("fileData", i.get().getFileData());
+        temp.put("fileName", i.get().getFileName());
+        temp.put("fileExtension", i.get().getFileExtension());
+
+        return ResponseEntity.ok(temp.toString());
+    }
+    
 
     @PostMapping("/like")
     public ResponseEntity<?> postLike(@RequestParam Integer id)

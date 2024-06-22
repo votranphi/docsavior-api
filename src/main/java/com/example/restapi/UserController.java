@@ -278,4 +278,9 @@ public class UserController {
         return ResponseEntity.ok(jsonObject.toString());
     }
     
+    @GetMapping("/avatar_data")
+    public ResponseEntity<?> getMethodName(@RequestParam String username) {
+        return ResponseEntity.ok(new Detail(userService.getAvatarDataByUsername(username)));
+    }
+    
 }
