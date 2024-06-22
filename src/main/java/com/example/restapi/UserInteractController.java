@@ -53,11 +53,11 @@ public class UserInteractController {
 
             if(type)
             {
-                return ResponseEntity.ok(new Detail("1"));
+                return ResponseEntity.ok(new Detail("like"));
             }
             else if (!type)
             {
-                return ResponseEntity.ok(new Detail("0"));
+                return ResponseEntity.ok(new Detail("dislike"));
             }
         }
         return ResponseEntity.ok(new Detail("didn't interact"));
