@@ -133,16 +133,16 @@ public class NewsfeedController {
         // convert foundUsers to jsonArray
         for (Newsfeed i : foundNewsfeeds) {
             JSONObject temp = new JSONObject();
-            jsonObject.put("id", i.getId());
-            jsonObject.put("username", i.getUsername());
-            jsonObject.put("postDescription", i.getPostDescription());
-            jsonObject.put("postContent", i.getPostContent());
-            jsonObject.put("likeNumber", i.getLikeNumber());
-            jsonObject.put("dislikeNumber", i.getDislikeNumber());
-            jsonObject.put("commentNumber", i.getCommentNumber());
-            jsonObject.put("fileData", i.getFileData());
-            jsonObject.put("fileName", i.getFileName());
-            jsonObject.put("fileExtension", i.getFileExtension());
+            temp.put("id", i.getId());
+            temp.put("username", i.getUsername());
+            temp.put("postDescription", i.getPostDescription());
+            temp.put("postContent", i.getPostContent());
+            temp.put("likeNumber", i.getLikeNumber());
+            temp.put("dislikeNumber", i.getDislikeNumber());
+            temp.put("commentNumber", i.getCommentNumber());
+            temp.put("fileData", i.getFileData());
+            temp.put("fileName", i.getFileName());
+            temp.put("fileExtension", i.getFileExtension());
 
             jsonArray.put(temp);
         }
