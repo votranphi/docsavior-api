@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 
 
+
 @RestController
 @RequestMapping(value = "/newsfeed")
 public class NewsfeedController {
@@ -23,7 +24,7 @@ public class NewsfeedController {
     public ResponseEntity<?> getAllPosts() {
         var allPosts = newsfeedService.getAllPosts();
 
-        if (newsfeedService.isEmpty()) {
+        if (allPosts.size() == 0) {
             return new ResponseEntity<>(new Detail("There's no post to show!"), HttpStatusCode.valueOf(600));
         }
 
@@ -59,6 +60,36 @@ public class NewsfeedController {
         
         return ResponseEntity.ok(new Detail("Post successfully!"));
     }
+
+    @GetMapping("/me")
+    public ResponseEntity<?> getMyPost(@RequestParam String username) {
+        var allMyPosts = newsfeedService.getMyPost(username);
+
+        if (allMyPosts.size() == 0) {
+            return new ResponseEntity<>(new Detail("There's no post to show!"), HttpStatusCode.valueOf(600));
+        }
+
+        JSONArray jsonArray = new JSONArray();
+
+        for (Newsfeed i : allMyPosts) {
+            JSONObject jsonObject = new JSONObject();
+            jsonObject.put("id", i.getId());
+            jsonObject.put("username", i.getUsername());
+            jsonObject.put("postDescription", i.getPostDescription());
+            jsonObject.put("postContent", i.getPostContent());
+            jsonObject.put("likeNumber", i.getLikeNumber());
+            jsonObject.put("dislikeNumber", i.getDislikeNumber());
+            jsonObject.put("commentNumber", i.getCommentNumber());
+            jsonObject.put("fileData", i.getFileData());
+            jsonObject.put("fileName", i.getFileName());
+            jsonObject.put("fileExtension", i.getFileExtension());
+
+            jsonArray.put(jsonObject);
+        }
+
+        return ResponseEntity.ok(jsonArray.toString());
+    }
+    
 
     @PostMapping("/like")
     public ResponseEntity<?> postLike(@RequestParam Integer id)
