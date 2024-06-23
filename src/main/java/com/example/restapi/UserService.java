@@ -42,6 +42,18 @@ public class UserService {
         });
     }
 
+    @Transactional
+    public void updateUserInfo(String username, String fullName, String email, boolean gender, String birthDate, String phoneNumber)
+    {
+        userRepository.findById(username).map(target -> {
+            target.setFullName(fullName);
+            target.setEmail(email);
+            target.setGender(gender);
+            target.setBirthDate(birthDate);
+            target.setPhoneNumber(phoneNumber);
+            return target;
+        });
+    }
     // function to get avatarData by username
     public String getAvatarDataByUsername(String username) {
         return userRepository.findAvatarDataByUsername(username);

@@ -283,4 +283,10 @@ public class UserController {
         return ResponseEntity.ok(new Detail(userService.getAvatarDataByUsername(username)));
     }
     
+    @PostMapping("/update_user_info")
+    public ResponseEntity<?> postUserInfo(@RequestParam String username, @RequestParam String fullName, @RequestParam String email, @RequestParam boolean gender, @RequestParam String birthDate, @RequestParam String phoneNumber)
+    {
+        userService.updateUserInfo(username, fullName, email, gender, birthDate, phoneNumber);
+        return ResponseEntity.ok(new Detail("update user information succesfully!"));
+    }
 }
