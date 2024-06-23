@@ -3,6 +3,9 @@ package com.example.restapi;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
+
+import jakarta.transaction.Transactional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 
 @Service
@@ -21,6 +24,7 @@ public class NotificationService {
     }
 
     // function to delete notification by id
+    @Transactional
     public void deleteNotificationById(String username, Integer type, Integer idPost, String interacter) {
         notificationRepository.deleteNotificationById(username, type, idPost, interacter);
     }

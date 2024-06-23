@@ -24,4 +24,9 @@ public class CommentService {
     public void deleteCommentById(Integer idComment) {
         commentRepository.deleteById(idComment);
     }
+
+    // function to get the hehe
+    public Integer findHehe(String username, Integer idPost, String commentContent) {
+        return commentRepository.findHehe(username, idPost, commentContent);
+    }
 }

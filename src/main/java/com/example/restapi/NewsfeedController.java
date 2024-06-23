@@ -209,5 +209,20 @@ public class NewsfeedController {
 
         return ResponseEntity.ok(new Detail("UnDislike successfully!"));
     }
+
+    @PostMapping("/comment")
+    public ResponseEntity<?> postComment(@RequestParam Integer id)
+    {
+        newsfeedService.updateCommentNumber(id);
+
+        return ResponseEntity.ok(new Detail("Comment successfully!"));
+    }
     
+    @PostMapping("/uncomment")
+    public ResponseEntity<?> postUncomment(@RequestParam Integer id)
+    {
+        newsfeedService.updateUnCommentNumber(id);
+
+        return ResponseEntity.ok(new Detail("Uncomment successfully!"));
+    }
 }   

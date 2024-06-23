@@ -56,6 +56,24 @@ public class NewsfeedService {
     }
 
     @Transactional
+    public void updateCommentNumber(Integer id)
+    {
+        newsfeedRepository.findById(id).map(target -> {
+            target.setCommentNumber(target.getCommentNumber()+1);
+            return target;
+        });
+    }
+
+    @Transactional 
+    public void updateUnCommentNumber(Integer id)
+    {
+        newsfeedRepository.findById(id).map(target -> {
+            target.setCommentNumber(target.getCommentNumber()-1);
+            return target;
+        });
+    }
+
+    @Transactional
     public void updateUnlikeNumber(Integer id)
     {
         newsfeedRepository.findById(id).map(target -> {

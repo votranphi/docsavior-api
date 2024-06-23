@@ -11,4 +11,7 @@ import org.springframework.stereotype.Repository;
 public interface CommentRepository extends JpaRepository<Comment, Integer> {
     @Query("SELECT c FROM Comment c WHERE idPost = :idPost ORDER BY c.time DESC")
     List<Comment> findCommentByIdPost(@Param("idPost") Integer idPost);
+
+    @Query("SELECT c.idComment FROM Comment c WHERE c.username = :username AND c.idPost = :idPost AND c.commentContent = :commentContent")
+    Integer findHehe(@Param("username") String username, @Param("idPost") Integer idPost, @Param("commentContent") String commentContent);
 }

@@ -29,7 +29,9 @@ public class CommentController {
 
         commentService.saveComment(comment);
 
-        return ResponseEntity.ok(new Detail("Save comment successfully!"));
+        Integer addedIdComment = commentService.findHehe(username, idPost, commentContent);
+
+        return ResponseEntity.ok(new Detail(String.valueOf(addedIdComment)));
     }
     
 
