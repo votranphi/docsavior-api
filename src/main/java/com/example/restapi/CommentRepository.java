@@ -9,6 +9,6 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface CommentRepository extends JpaRepository<Comment, Integer> {
-    @Query("SELECT c FROM Comment c WHERE idPost = :idPost")
+    @Query("SELECT c FROM Comment c WHERE idPost = :idPost ORDER BY c.time DESC")
     List<Comment> findCommentByIdPost(@Param("idPost") Integer idPost);
 }
