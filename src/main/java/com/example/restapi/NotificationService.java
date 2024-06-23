@@ -1,5 +1,7 @@
 package com.example.restapi;
+
 import java.util.List;
+
 import org.springframework.stereotype.Service;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -7,22 +9,19 @@ import org.springframework.beans.factory.annotation.Autowired;
 public class NotificationService {
     @Autowired
     private NotificationRepository notificationRepository;
-
-    // find all notifications
-    public List<Notification> findNotificationByUsername(String username)
-    {
+    
+    // function to get all notification by username
+    public List<Notification> findNotificationByUsername(String username) {
         return notificationRepository.findNotificationByUsername(username);
     }
 
-    public void saveNewNotificationType01(String username, Integer type, Integer idPost, String usernameInteract)
-    {
-        Notification notification = new Notification(username, type, idPost, usernameInteract);
+    // function to save a new notification
+    public void saveNewNotification(Notification notification) {
         notificationRepository.save(notification);
     }
 
-    public void saveNewNotificationType2(String username, Integer type, String usernameInteract)
-    {
-        Notification notification = new Notification(username, type, usernameInteract);
-        notificationRepository.save(notification);
+    // function to delete notification by id
+    public void deleteNotificationById(String username, Integer type, Integer idPost, String interacter) {
+        notificationRepository.deleteNotificationById(username, type, idPost, interacter);
     }
 }
