@@ -17,11 +17,14 @@ public class LookUpHistory {
 
     private Integer lookUpType; // 0 is lookup in newsfeed, 1 is look up in chat, 2 is lookup in friend
 
+    private Long time; // time in Unix
+
     public LookUpHistory(String username, String lookUpInfo, Integer lookUpType)
     {
         this.username = username;
         this.lookUpInfo = lookUpInfo;
         this.lookUpType = lookUpType;
+        this.time = System.currentTimeMillis() / 1000L;
     }
 
     public LookUpHistory() { }
@@ -35,13 +38,16 @@ public class LookUpHistory {
         return username;
     }
 
-    public String lookUpInfo()
-    {
+    public String getLookUpInfo() {
         return lookUpInfo;
     }
 
     public Integer getLookUpType() {
         return lookUpType;
+    }
+
+    public Long getTime() {
+        return time;
     }
 
     public void setId(Integer id) {
@@ -60,5 +66,9 @@ public class LookUpHistory {
 
     public void setLookUpType(Integer lookUpType) {
         this.lookUpType = lookUpType;
+    }
+
+    public void setTime(Long time) {
+        this.time = time;
     }
 }

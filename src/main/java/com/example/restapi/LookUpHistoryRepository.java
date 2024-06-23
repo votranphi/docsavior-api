@@ -12,16 +12,20 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface LookUpHistoryRepository extends JpaRepository<LookUpHistory, Integer> {
 
-    @Query("SELECT l.lookUpInfo FROM LookUpHistory l WHERE l.username = :username AND l.lookUpType = 0")
+    @Query("SELECT l.lookUpInfo FROM LookUpHistory l WHERE l.username = :username AND l.lookUpType = 0 ORDER BY l.time DESC")
     List<String> findPostLookUpHistoryByUsername(@Param("username") String username);
 
-    @Query("SELECT l.lookUpInfo FROM LookUpHistory l WHERE l.username = :username AND l.lookUpType = 2")
+    @Query("SELECT l.lookUpInfo FROM LookUpHistory l WHERE l.username = :username AND l.lookUpType = 2 ORDER BY l.time DESC")
     List<String> findUserLookUpHistoryByUsername(@Param("username") String username);
 
     @Query("SELECT count(*) FROM LookUpHistory l WHERE l.username = :username AND l.lookUpInfo = :lookUpInfo AND l.lookUpType = :lookUpType")
-    Integer findLookUpHistoryByUsernameAndLookUpInfoAndLookUpType(@Param("username") String username, @Param("lookUpInfo") String lookUpInfo, @Param("lookUpType") Integer lookUpType);
+    Integer findNumberOfLookUpHistoryByUsernameAndLookUpInfoAndLookUpType(@Param("username") String username, @Param("lookUpInfo") String lookUpInfo, @Param("lookUpType") Integer lookUpType);
 
     @Modifying
     @Query("DELETE FROM LookUpHistory l WHERE l.username = :username AND l.lookUpInfo = :lookUpInfo AND l.lookUpType = :lookUpType")
     void deleteLookUpHistoryByUsernameAndLookUpInfoAndLookUpType(@Param("username") String username, @Param("lookUpInfo") String lookUpInfo, @Param("lookUpType") Integer lookUpType);
+
+    @Modifying
+    @Query("UPDATE LookUpHistory l SET l.time = :time WHERE l.username = :username AND l.lookUpInfo = :lookUpInfo AND l.lookUpType = :lookUpType")
+    void updateTimeByUsernameAndLookUpInfoAndLookUpType(@Param("username") String username, @Param("lookUpInfo") String lookUpInfo, @Param("lookUpType") Integer lookUpType, @Param("time") Long time);
 }

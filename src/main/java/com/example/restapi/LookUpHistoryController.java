@@ -29,6 +29,8 @@ public class LookUpHistoryController {
         // add look up history to database if it wasn't added
         if (!lookUpHistoryService.isLookUpHistoryAdded(username, lookUpInfo, lookUpType)) {
             lookUpHistoryService.saveNewLookUpHistory(lookUpHistory);
+        } else {
+            lookUpHistoryService.updateLookupHistoryTime(lookUpHistory);
         }
         
         return ResponseEntity.ok(new Detail("New lookup history saved successfully!"));

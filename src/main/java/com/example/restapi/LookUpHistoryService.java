@@ -16,6 +16,12 @@ public class LookUpHistoryService {
         lookUpHistoryRepository.save(lookUpHistory);
     }
 
+    // function to do updating look_up_history's time
+    @Transactional
+    public void updateLookupHistoryTime(LookUpHistory lookUpHistory) {
+        lookUpHistoryRepository.updateTimeByUsernameAndLookUpInfoAndLookUpType(lookUpHistory.getUsername(), lookUpHistory.getLookUpInfo(), lookUpHistory.getLookUpType(), System.currentTimeMillis() / 1000L);
+    }
+
     // method to get all the post's LookUpHistory of of a user by username
     public List<String> findPostLookUpHistoryByUsername(String username) {
         return lookUpHistoryRepository.findPostLookUpHistoryByUsername(username);
@@ -34,7 +40,7 @@ public class LookUpHistoryService {
 
     // method to check if the record is added to table
     public boolean isLookUpHistoryAdded(String username, String lookUpInfo, Integer lookUpType) {
-        Integer numberOfLookUpHistoryMatched = lookUpHistoryRepository.findLookUpHistoryByUsernameAndLookUpInfoAndLookUpType(username, lookUpInfo, lookUpType);
+        Integer numberOfLookUpHistoryMatched = lookUpHistoryRepository.findNumberOfLookUpHistoryByUsernameAndLookUpInfoAndLookUpType(username, lookUpInfo, lookUpType);
 
         if (numberOfLookUpHistoryMatched == 0) {
             return false;
