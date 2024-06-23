@@ -47,6 +47,7 @@ public class NewsfeedController {
             jsonObject.put("fileData", i.getFileData());
             jsonObject.put("fileName", i.getFileName());
             jsonObject.put("fileExtension", i.getFileExtension());
+            jsonObject.put("time", i.getTime());
 
             jsonArray.put(jsonObject);
         }
@@ -88,6 +89,7 @@ public class NewsfeedController {
             jsonObject.put("fileData", i.getFileData());
             jsonObject.put("fileName", i.getFileName());
             jsonObject.put("fileExtension", i.getFileExtension());
+            jsonObject.put("time", i.getTime());
 
             jsonArray.put(jsonObject);
         }
@@ -144,6 +146,7 @@ public class NewsfeedController {
             temp.put("fileData", i.getFileData());
             temp.put("fileName", i.getFileName());
             temp.put("fileExtension", i.getFileExtension());
+            temp.put("time", i.getTime());
 
             jsonArray.put(temp);
         }
@@ -169,6 +172,7 @@ public class NewsfeedController {
         temp.put("fileData", i.get().getFileData());
         temp.put("fileName", i.get().getFileName());
         temp.put("fileExtension", i.get().getFileExtension());
+        temp.put("time", i.get().getTime());
 
         return ResponseEntity.ok(temp.toString());
     }

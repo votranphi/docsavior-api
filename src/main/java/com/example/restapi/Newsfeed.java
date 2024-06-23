@@ -33,6 +33,8 @@ public class Newsfeed {
  
     private String fileExtension;
 
+    private Long time;
+
     public Newsfeed(String username, String postDescription, String postContent, String fileData, String fileName, String fileExtension) {
         this.username = username;
         this.postDescription = postDescription;
@@ -43,6 +45,7 @@ public class Newsfeed {
         this.fileData = fileData;
         this.fileName = fileName;
         this.fileExtension = fileExtension;
+        this.time = System.currentTimeMillis() / 1000L;
     }
 
     public Newsfeed() { }
@@ -87,6 +90,10 @@ public class Newsfeed {
         return fileExtension;
     }
 
+    public Long getTime() {
+        return time;
+    }
+
     public void setId(Integer id) {
         this.id = id;
     }
@@ -125,5 +132,9 @@ public class Newsfeed {
 
     public void setFileExtension(String fileExtension) {
         this.fileExtension = fileExtension;
+    }
+
+    public void setTime(Long time) {
+        this.time = time;
     }
 }
