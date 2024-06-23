@@ -13,9 +13,9 @@ public class Notification {
 
     private String username; // username of the account which is the notification owner
 
-    private Integer type; // like = 0, dislike = 1, comment = 2, friend request = 3
+    private Integer type; // like = 0, dislike = 1, comment = 2, friend request = 3, accept friend request = 4, reject friend request = 5
 
-    private Integer idPost; // post's id. This can be -1 if type is 2
+    private Integer idPost; // post's id. This can be -1 if type is 3 or 4 or 5
 
     private String interacter; // username of the person who interact with post or send a request
 
@@ -36,8 +36,12 @@ public class Notification {
             this.notificationContent = "has disliked your post";
         } else if (type == 2) {
             this.notificationContent = "has left a comment on your post";
-        } else {
+        } else if (type == 3) {
             this.notificationContent = "has sent you a friend request";
+        } else if (type == 4) {
+            this.notificationContent = "has accepted your friend request";
+        } else {
+            this.notificationContent = "has rejected your friend request";
         }
 
         this.time = System.currentTimeMillis() / 1000L;
