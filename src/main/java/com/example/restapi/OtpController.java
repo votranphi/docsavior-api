@@ -4,7 +4,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import jakarta.mail.Authenticator;
 import jakarta.mail.Message;
-import jakarta.mail.MessagingException;
 import jakarta.mail.Multipart;
 import jakarta.mail.PasswordAuthentication;
 import jakarta.mail.Session;
@@ -14,9 +13,6 @@ import jakarta.mail.internet.MimeBodyPart;
 import jakarta.mail.internet.MimeMessage;
 import jakarta.mail.internet.MimeMultipart;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -24,8 +20,6 @@ import java.util.Optional;
 import java.util.Properties;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.io.ClassPathResource;
-import org.springframework.core.io.Resource;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -79,8 +73,8 @@ public class OtpController {
 
             String msgBody = Files.readString(path);
 
-            msgBody.replace("{username}", username);
-            msgBody.replace("{otp_code}", otp.get().getOtp());
+            msgBody = msgBody.replace("{username}", username);
+            msgBody = msgBody.replace("{otp_code}", otp.get().getOtp());
 
             MimeBodyPart mimeBodyPart = new MimeBodyPart();
             mimeBodyPart.setContent(msgBody, "text/html; charset=utf-8");

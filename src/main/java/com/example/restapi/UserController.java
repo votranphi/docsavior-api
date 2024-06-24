@@ -7,7 +7,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import jakarta.mail.Authenticator;
 import jakarta.mail.Message;
-import jakarta.mail.MessagingException;
 import jakarta.mail.Multipart;
 import jakarta.mail.PasswordAuthentication;
 import jakarta.mail.Session;
@@ -158,8 +157,8 @@ public class UserController {
 
                         String msgBody = Files.readString(path);
 
-                        msgBody.replace("{username}", username);
-                        msgBody.replace("{new_password}", randomPassword);
+                        msgBody = msgBody.replace("{username}", username);
+                        msgBody = msgBody.replace("{new_password}", randomPassword);
 
                         MimeBodyPart mimeBodyPart = new MimeBodyPart();
                         mimeBodyPart.setContent(msgBody, "text/html; charset=utf-8");
