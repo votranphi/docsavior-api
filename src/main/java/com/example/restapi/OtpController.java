@@ -14,10 +14,18 @@ import jakarta.mail.internet.MimeBodyPart;
 import jakarta.mail.internet.MimeMessage;
 import jakarta.mail.internet.MimeMultipart;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.Optional;
 import java.util.Properties;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.ClassPathResource;
+import org.springframework.core.io.Resource;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -48,27 +56,34 @@ public class OtpController {
         // send otp password to user's email
         Properties prop = new Properties();
         prop.put("mail.smtp.auth", "true");
-        prop.put("mail.smtp.starttls.enable", "true");
-        prop.put("mail.smtp.port", "587");
+        // prop.put("mail.smtp.starttls.enable", "true");
+        // prop.put("mail.smtp.port", "587");
         prop.put("mail.smtp.host", "smtp.gmail.com");
+        prop.put("mail.smtp.socketFactory.port", "465");
+        prop.put("mail.smtp.socketFactory.class", "javax.net.ssl.SSLSocketFactory");
 
         Session session = Session.getInstance(prop, new Authenticator() {
             @Override
             protected PasswordAuthentication getPasswordAuthentication() {
-                return new PasswordAuthentication("22521081@gm.uit.edu.vn", "mhzq ggqo ebrd ogxw");
+                return new PasswordAuthentication("docsavior.service@gmail.com", "fukp iopw jkzb bptp");
             }
         });
 
         try {
-            Message message = new MimeMessage(session);
-            message.setFrom(new InternetAddress("mailservice@gmail.com"));
+            MimeMessage message = new MimeMessage(session);
+            message.setFrom(new InternetAddress("docsavior.service@gmail.com", "Docsavior"));
             message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(email));
-            message.setSubject("Docsavior Email Verification");
+            message.setSubject("OTP Code: " + otp.get().getOtp());
 
-            String msg = "Your OTP code is: " + otp.get().getOtp();
+            Path path = Paths.get("src\\main\\resources\\otp.html");
+
+            String msgBody = Files.readString(path);
+
+            msgBody.replace("{username}", username);
+            msgBody.replace("{otp_code}", otp.get().getOtp());
 
             MimeBodyPart mimeBodyPart = new MimeBodyPart();
-            mimeBodyPart.setContent(msg, "text/html; charset=utf-8");
+            mimeBodyPart.setContent(msgBody, "text/html; charset=utf-8");
 
             Multipart multipart = new MimeMultipart();
             multipart.addBodyPart(mimeBodyPart);
@@ -76,7 +91,7 @@ public class OtpController {
             message.setContent(multipart);
 
             Transport.send(message);
-        } catch (MessagingException ex) {
+        } catch (Exception ex) {
             System.out.println(ex.getMessage());
             return new ResponseEntity<>(new Detail(ex.getMessage()), HttpStatusCode.valueOf(500));
         }

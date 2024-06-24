@@ -20,6 +20,9 @@ import jakarta.mail.internet.MimeMultipart;
 import java.util.regex.Pattern;
 import java.util.Properties;
 import java.util.regex.Matcher;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -132,27 +135,34 @@ public class UserController {
                     // send new password to user's email
                     Properties prop = new Properties();
                     prop.put("mail.smtp.auth", "true");
-                    prop.put("mail.smtp.starttls.enable", "true");
-                    prop.put("mail.smtp.port", "587");
+                    // prop.put("mail.smtp.starttls.enable", "true");
+                    // prop.put("mail.smtp.port", "587");
                     prop.put("mail.smtp.host", "smtp.gmail.com");
+                    prop.put("mail.smtp.socketFactory.port", "465");
+                    prop.put("mail.smtp.socketFactory.class", "javax.net.ssl.SSLSocketFactory");
 
                     Session session = Session.getInstance(prop, new Authenticator() {
                         @Override
                         protected PasswordAuthentication getPasswordAuthentication() {
-                            return new PasswordAuthentication("22521081@gm.uit.edu.vn", "mhzq ggqo ebrd ogxw");
+                            return new PasswordAuthentication("docsavior.service@gmail.com", "fukp iopw jkzb bptp");
                         }
                     });
 
                     try {
-                        Message message = new MimeMessage(session);
-                        message.setFrom(new InternetAddress("mailservice@gmail.com"));
+                        MimeMessage message = new MimeMessage(session);
+                        message.setFrom(new InternetAddress("docsavior.service@gmail.com", "Docsavior"));
                         message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(email));
-                        message.setSubject("Docsavior Password Recovery");
+                        message.setSubject("New password: " + randomPassword);
 
-                        String msg = "Your new password is: " + randomPassword;
+                        Path path = Paths.get("src\\main\\resources\\password_recovery.html");
+
+                        String msgBody = Files.readString(path);
+
+                        msgBody.replace("{username}", username);
+                        msgBody.replace("{new_password}", randomPassword);
 
                         MimeBodyPart mimeBodyPart = new MimeBodyPart();
-                        mimeBodyPart.setContent(msg, "text/html; charset=utf-8");
+                        mimeBodyPart.setContent(msgBody, "text/html; charset=utf-8");
 
                         Multipart multipart = new MimeMultipart();
                         multipart.addBodyPart(mimeBodyPart);
@@ -160,7 +170,7 @@ public class UserController {
                         message.setContent(multipart);
 
                         Transport.send(message);
-                    } catch (MessagingException ex) {
+                    } catch (Exception ex) {
                         System.out.println(ex.getMessage());
                         return new ResponseEntity<>(new Detail(ex.getMessage()), HttpStatusCode.valueOf(500));
                     }
