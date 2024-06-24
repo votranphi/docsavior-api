@@ -38,4 +38,11 @@ public class FriendController {
 
         return ResponseEntity.ok(new Detail("Friend saved successfully!"));
     }
+
+    @DeleteMapping("/delete")
+    public ResponseEntity<?> deleteFriend(@RequestParam String username, @RequestParam String usernameFriend) {
+        friendService.deleteFriend(username, usernameFriend);
+
+        return ResponseEntity.ok(new Detail("Friend deleted successfully!"));
+    }
 }

@@ -5,6 +5,8 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import jakarta.transaction.Transactional;
+
 @Service
 public class FriendService {
     @Autowired
@@ -18,5 +20,10 @@ public class FriendService {
     public void saveNewFriend(String username, String usernameFriend) {
         Friend friend = new Friend(username, usernameFriend);
         friendRepository.save(friend);
+    }
+
+    @Transactional
+    public void deleteFriend(String username, String usernameFriend) {
+        friendRepository.deleteFriend(username, usernameFriend);
     }
 }
