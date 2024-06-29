@@ -4,6 +4,9 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -20,6 +23,12 @@ public class NewsfeedService {
     // function to get all post from Newsfeed table
     public List<Newsfeed> getAllPosts() {
         return newsfeedRepository.findAll();
+    }
+
+    // function to ge a sequence of continuous post
+    public Page<Newsfeed> getSequenceOfPost(Integer page, Integer pageSize) {
+        Pageable pageable = PageRequest.of(page, pageSize);
+        return newsfeedRepository.findAll(pageable);
     }
 
     // function to get my post

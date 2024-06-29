@@ -9,6 +9,7 @@ import java.util.Optional;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -54,6 +55,37 @@ public class NewsfeedController {
 
         return ResponseEntity.ok(jsonArray.toString());
     }
+
+    @GetMapping("/post")
+    public ResponseEntity<?> getSpecificPosts(@RequestParam Integer page, @RequestParam Integer pageSize) {
+        Page<Newsfeed> posts = newsfeedService.getSequenceOfPost(page, pageSize);
+
+        if (posts.isEmpty()) {
+            return new ResponseEntity<>(new Detail("There's no post to show!"), HttpStatusCode.valueOf(600));
+        }
+
+        JSONArray jsonArray = new JSONArray();
+
+        for (Newsfeed i : posts) {
+            JSONObject jsonObject = new JSONObject();
+            jsonObject.put("id", i.getId());
+            jsonObject.put("username", i.getUsername());
+            jsonObject.put("postDescription", i.getPostDescription());
+            jsonObject.put("postContent", i.getPostContent());
+            jsonObject.put("likeNumber", i.getLikeNumber());
+            jsonObject.put("dislikeNumber", i.getDislikeNumber());
+            jsonObject.put("commentNumber", i.getCommentNumber());
+            jsonObject.put("fileData", i.getFileData());
+            jsonObject.put("fileName", i.getFileName());
+            jsonObject.put("fileExtension", i.getFileExtension());
+            jsonObject.put("time", i.getTime());
+
+            jsonArray.put(jsonObject);
+        }
+
+        return ResponseEntity.ok(jsonArray.toString());
+    }
+    
 
     @PostMapping("/add")
     public ResponseEntity<?> postPost(@RequestParam String username, @RequestParam String postDescription, @RequestParam String postContent, @RequestParam String fileData, @RequestParam String fileName, @RequestParam String fileExtension) {
