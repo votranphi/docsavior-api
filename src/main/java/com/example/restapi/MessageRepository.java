@@ -9,6 +9,9 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface MessageRepository extends JpaRepository<Message, Integer> {
-    @Query("SELECT m FROM Message m WHERE m.username = :username AND m.sender = :sender UNION SELECT m FROM Message m WHERE m.username = :sender AND m.sender = :username")
+    @Query("SELECT m FROM Message m WHERE m.username = :username AND m.sender = :sender ORDER BY m.time ASC UNION SELECT m FROM Message m WHERE m.username = :sender AND m.sender = :username ORDER BY m.time ASC")
     List<Message> findMessageByUsername(@Param("username") String username, @Param("sender") String sender);
+
+    @Query("SELECT m.username FROM Message m WHERE m.sender = :username UNION SELECT m.sender FROM Message m WHERE m.username = :username")
+    List<String> findMessagedUsername(@Param("username") String username);
 }

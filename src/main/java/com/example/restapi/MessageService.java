@@ -19,4 +19,9 @@ public class MessageService {
     public void saveMessage(Message message) {
         messageRepository.save(message);
     }
+
+    // function to get the username of the messaged user
+    public List<String> getMessagedUsername(String username) {
+        return messageRepository.findMessagedUsername(username);
+    }
 }

@@ -29,6 +29,10 @@ public class Message {
         this.time = System.currentTimeMillis() / 1000L;
     }
 
+    public Message() {
+        
+    }
+
     public Integer getId() {
         return id;
     }

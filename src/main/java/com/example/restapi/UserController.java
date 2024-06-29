@@ -298,4 +298,11 @@ public class UserController {
         userService.updateUserInfo(username, fullName, email, gender, birthDate, phoneNumber);
         return ResponseEntity.ok(new Detail("update user information succesfully!"));
     }
+
+    @GetMapping("/status")
+    public ResponseEntity<?> getUserStatus(@RequestParam String username) {
+        boolean userStatus = userService.getStatusByUsername(username);
+
+        return ResponseEntity.ok(new Detail(userStatus ? "true" : "false"));
+    }
 }

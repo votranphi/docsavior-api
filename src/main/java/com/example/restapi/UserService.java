@@ -109,4 +109,9 @@ public class UserService {
     public int myRandom(int min, int max) {
         return (int)(Math.random() * (max - min + 0.99) + min);
     }
+
+    // function to get user's status by username
+    public boolean getStatusByUsername(String username) {
+        return userRepository.findStatusByUsername(username);
+    }
 }
