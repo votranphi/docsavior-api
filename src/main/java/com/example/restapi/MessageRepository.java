@@ -14,4 +14,7 @@ public interface MessageRepository extends JpaRepository<Message, Integer> {
 
     @Query("SELECT m.username FROM Message m WHERE m.sender = :username UNION SELECT m.sender FROM Message m WHERE m.username = :username")
     List<String> findMessagedUsername(@Param("username") String username);
+
+    @Query("SELECT m FROM Message m WHERE m.username = :username AND m.sender = :sender AND m.isSeen = false ORDER BY m.time ASC")
+    List<Message> findUnseenMessageByUsername(@Param("username") String username, @Param("sender") String sender);
 }

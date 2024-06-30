@@ -18,7 +18,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 
 
-
 @RestController
 @RequestMapping(value = "/message")
 public class MessageController {
@@ -108,6 +107,34 @@ public class MessageController {
         jsonObject.put("messagedUsernames", jsonArray);
 
         return ResponseEntity.ok(jsonObject.toString());
+    }
+
+    @GetMapping("/unseen")
+    public ResponseEntity<?> getUnseenMessage(@RequestParam String username, @RequestParam String sender) {
+        List<Message> unseenMessages = messageService.getUnseenMessageByUsername(username, sender);
+
+        JSONArray jsonArray = new JSONArray();
+
+        for (Message i : unseenMessages) {
+            JSONObject jsonObject = new JSONObject();
+            jsonObject.put("id", i.getId());
+            jsonObject.put("username", i.getUsername());
+            jsonObject.put("sender", i.getSender());
+            jsonObject.put("content", i.getContent());
+            jsonObject.put("isSeen", i.getIsSeen());
+            jsonObject.put("time", i.getTime());
+
+            jsonArray.put(jsonObject);
+        }
+
+        return ResponseEntity.ok(jsonArray.toString());
+    }
+    
+    @PostMapping("/seen_to_true")
+    public ResponseEntity<?> postSeenToTrue(@RequestParam Integer id) {
+        messageService.updateIsSeenToTrue(id);
+
+        return ResponseEntity.ok(new Detail("Update isSeen to true successfully!"));
     }
     
 }
