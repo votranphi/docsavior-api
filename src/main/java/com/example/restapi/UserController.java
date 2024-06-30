@@ -106,6 +106,13 @@ public class UserController {
         return ResponseEntity.ok(new Detail("Logout successfully!"));
     }
 
+    @PostMapping("/login_to_true")
+    public @ResponseBody ResponseEntity<?> postLoginSignal(@RequestParam String username) {
+        userService.updateIsActive(username, true);
+
+        return ResponseEntity.ok(new Detail("Login successfully!"));
+    }
+
     @PostMapping("/password_recovery")
     public @ResponseBody ResponseEntity<?> postPasswordRecovery(@RequestParam String username, @RequestParam String email, @RequestParam String phoneNumber) {
         var thisUser = userService.getUserById(username);
