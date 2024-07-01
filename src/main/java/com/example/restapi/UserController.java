@@ -89,7 +89,6 @@ public class UserController {
 
         if (!thisUser.isEmpty()) {
             if (password.equals(thisUser.get().getPassword())) {
-                userService.updateIsActive(username, true);
                 return new ResponseEntity<>(new Detail("Login successfully!"), HttpStatusCode.valueOf(200));
             } else {
                 return new ResponseEntity<>(new Detail("Wrong password!"), HttpStatusCode.valueOf(600));
