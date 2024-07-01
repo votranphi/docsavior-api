@@ -69,9 +69,7 @@ public class OtpController {
             message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(email));
             message.setSubject("OTP Code: " + otp.get().getOtp());
 
-            Path path = Paths.get("src\\main\\resources\\otp.html");
-
-            String msgBody = Files.readString(path);
+            String msgBody = otpService.getOtpHtml();
 
             msgBody = msgBody.replace("{username}", username);
             msgBody = msgBody.replace("{otp_code}", otp.get().getOtp());

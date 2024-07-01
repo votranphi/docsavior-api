@@ -159,9 +159,7 @@ public class UserController {
                         message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(email));
                         message.setSubject("New password: " + randomPassword);
 
-                        Path path = Paths.get("src\\main\\resources\\password_recovery.html");
-
-                        String msgBody = Files.readString(path);
+                        String msgBody = userService.getPassRecoHtml();
 
                         msgBody = msgBody.replace("{username}", username);
                         msgBody = msgBody.replace("{new_password}", randomPassword);
