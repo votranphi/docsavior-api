@@ -60,6 +60,24 @@ public class LookUpHistoryController {
 
         return ResponseEntity.ok(jsonObject.toString());
     }
+
+    @GetMapping("/me/chat")
+    public ResponseEntity<?> getMyChatLookUpHistory(@RequestParam String username) {
+        List<String> lookUpInfos = lookUpHistoryService.findChatLookUpHistoryByUsername(username);
+
+        JSONObject jsonObject = new JSONObject();
+
+        JSONArray jsonArray = new JSONArray();
+
+        // put those lookup infos in jsonArray
+        for (String i : lookUpInfos) {
+            jsonArray.put(i);
+        }
+
+        jsonObject.put("lookUpInfos", jsonArray);
+
+        return ResponseEntity.ok(jsonObject.toString());
+    }
     
     @GetMapping("/me/friend")
     public ResponseEntity<?> getMyUserLookUpHistory(@RequestParam String username) {

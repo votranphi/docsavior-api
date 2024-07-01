@@ -27,6 +27,11 @@ public class LookUpHistoryService {
         return lookUpHistoryRepository.findPostLookUpHistoryByUsername(username);
     }
 
+    // method to get all the chat's LookUpHistory of a user by username
+    public List<String> findChatLookUpHistoryByUsername(String username) {
+        return lookUpHistoryRepository.findChatLookUpHistoryByUsername(username);
+    }
+
     // method to get all the friend's LookUpHistory of a user by username
     public List<String> findUserLookUpHistoryByUsername(String username) {
         return lookUpHistoryRepository.findUserLookUpHistoryByUsername(username);
