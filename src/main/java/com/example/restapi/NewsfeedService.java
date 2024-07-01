@@ -46,6 +46,10 @@ public class NewsfeedService {
         newsfeedRepository.save(newnewsfeed);
     }
 
+    public int NumberOfPosts()
+    {
+        return newsfeedRepository.findAll().size();
+    }
     @Transactional
     public void updateLikeNumber(Integer id)
     {

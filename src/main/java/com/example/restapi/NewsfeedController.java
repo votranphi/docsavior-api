@@ -257,4 +257,10 @@ public class NewsfeedController {
 
         return ResponseEntity.ok(new Detail("Uncomment successfully!"));
     }
+
+    @GetMapping("/size")
+    public int getNumberOfPosts() {
+        return newsfeedService.NumberOfPosts();
+    }
+    
 }   
