@@ -74,6 +74,7 @@ Here are all the endpoints in this project:
     - **/user/add (POST):** add new user's information to the table (exclude avatar's information).
     - **/user/avatar (POST):** add new user's avatar information to the table.
     - **/user/avatar_data (GET):** get user's avatar data defined by user's username.
+    - **/user/check (POST):** check if username, email and phone number are valid.
     - **/user/login (POST):** receive and check if the username and password is valid.
     - **/user/login_to_true (POST):** update the user's status to true (online).
     - **/user/logout (POST):** update the user's status to false (offline).
