@@ -34,14 +34,14 @@ public class FriendRequestController {
     }
     
     @PostMapping("/add")
-    public ResponseEntity<?> postNewFriendRequest(@RequestParam String username, @RequestParam String requester) {
+    public ResponseEntity<Detail> postNewFriendRequest(@RequestParam String username, @RequestParam String requester) {
         friendRequestService.saveNewFriendRequest(username, requester);
 
         return ResponseEntity.ok(new Detail("Friend request saved successfully!"));
     }
 
     @DeleteMapping("/delete")
-    public ResponseEntity<?> deleteFriendRequest(@RequestParam String username, @RequestParam String requester) {
+    public ResponseEntity<Detail> deleteFriendRequest(@RequestParam String username, @RequestParam String requester) {
         friendRequestService.deleteFriendRequest(username, requester);
 
         return ResponseEntity.ok(new Detail("Friend request deleted successfully!"));

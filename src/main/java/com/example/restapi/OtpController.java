@@ -31,7 +31,7 @@ public class OtpController {
     OtpService otpService = new OtpService();
 
     @PostMapping("/create_or_refresh")
-    public ResponseEntity<?> postCreateOrRefresh(@RequestParam String username, @RequestParam String email) {
+    public ResponseEntity<Detail> postCreateOrRefresh(@RequestParam String username, @RequestParam String email) {
         Optional<Otp> otp = otpService.getOtpById(username);
 
         if (otp.isEmpty()) {
@@ -82,22 +82,22 @@ public class OtpController {
             Transport.send(message);
         } catch (Exception ex) {
             System.out.println(ex.getMessage());
-            return new ResponseEntity<>(new Detail(ex.getMessage()), HttpStatusCode.valueOf(500));
+            return new ResponseEntity<Detail>(new Detail(ex.getMessage()), HttpStatusCode.valueOf(500));
         }
 
         return ResponseEntity.ok(new Detail("Send OTP to email successfully!"));
     }
 
     @PostMapping("/check")
-    public ResponseEntity<?> postCheckOtp(@RequestParam String username, @RequestParam String otp) {
+    public ResponseEntity<Detail> postCheckOtp(@RequestParam String username, @RequestParam String otp) {
         if (otpService.isOtpCorrect(username, otp)) {
             if (otpService.isOtpExpired(username)) {
-                return new ResponseEntity<>(new Detail("OTP expired!"), HttpStatusCode.valueOf(600)); // code 600: OTP Expired
+                return new ResponseEntity<Detail>(new Detail("OTP expired!"), HttpStatusCode.valueOf(600)); // code 600: OTP Expired
             } else {
                 return ResponseEntity.ok(new Detail("OTP is correct!"));
             }
         } else {
-            return new ResponseEntity<>(new Detail("OTP is not correct!"), HttpStatusCode.valueOf(601)); // code 601: OTP it not correct
+            return new ResponseEntity<Detail>(new Detail("OTP is not correct!"), HttpStatusCode.valueOf(601)); // code 601: OTP it not correct
         }
     }
     

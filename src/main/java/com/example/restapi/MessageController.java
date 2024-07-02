@@ -25,7 +25,7 @@ public class MessageController {
     private MessageService messageService = new MessageService();
 
     @GetMapping("/all")
-    public ResponseEntity<?> getMyMessage(@RequestParam String username, @RequestParam String sender) {
+    public ResponseEntity<List<Message>> getMyMessage(@RequestParam String username, @RequestParam String sender) {
         List<Message> messages = messageService.getMessageByUsername(username, sender);
 
         // sort the list
@@ -36,21 +36,7 @@ public class MessageController {
             }
         });
 
-        JSONArray jsonArray = new JSONArray();
-
-        for (Message i : messages) {
-            JSONObject jsonObject = new JSONObject();
-            jsonObject.put("id", i.getId());
-            jsonObject.put("username", i.getUsername());
-            jsonObject.put("sender", i.getSender());
-            jsonObject.put("content", i.getContent());
-            jsonObject.put("isSeen", i.getIsSeen());
-            jsonObject.put("time", i.getTime());
-
-            jsonArray.put(jsonObject);
-        }
-
-        return ResponseEntity.ok(jsonArray.toString());
+        return ResponseEntity.ok(messages);
     }
 
     @GetMapping("/latest")
@@ -71,19 +57,11 @@ public class MessageController {
 
         Message i = messages.get(messages.size() - 1);
 
-        JSONObject jsonObject = new JSONObject();
-        jsonObject.put("id", i.getId());
-        jsonObject.put("username", i.getUsername());
-        jsonObject.put("sender", i.getSender());
-        jsonObject.put("content", i.getContent());
-        jsonObject.put("isSeen", i.getIsSeen());
-        jsonObject.put("time", i.getTime());
-
-        return ResponseEntity.ok(jsonObject.toString());
+        return ResponseEntity.ok(i);
     }
 
     @PostMapping("/add")
-    public ResponseEntity<?> postMessage(@RequestParam String username, @RequestParam String sender, @RequestParam String content) {
+    public ResponseEntity<Detail> postMessage(@RequestParam String username, @RequestParam String sender, @RequestParam String content) {
         Message message = new Message(username, sender, content);
 
         messageService.saveMessage(message);
@@ -110,28 +88,14 @@ public class MessageController {
     }
 
     @GetMapping("/unseen")
-    public ResponseEntity<?> getUnseenMessage(@RequestParam String username, @RequestParam String sender) {
+    public ResponseEntity<List<Message>> getUnseenMessage(@RequestParam String username, @RequestParam String sender) {
         List<Message> unseenMessages = messageService.getUnseenMessageByUsername(username, sender);
 
-        JSONArray jsonArray = new JSONArray();
-
-        for (Message i : unseenMessages) {
-            JSONObject jsonObject = new JSONObject();
-            jsonObject.put("id", i.getId());
-            jsonObject.put("username", i.getUsername());
-            jsonObject.put("sender", i.getSender());
-            jsonObject.put("content", i.getContent());
-            jsonObject.put("isSeen", i.getIsSeen());
-            jsonObject.put("time", i.getTime());
-
-            jsonArray.put(jsonObject);
-        }
-
-        return ResponseEntity.ok(jsonArray.toString());
+        return ResponseEntity.ok(unseenMessages);
     }
     
     @PostMapping("/seen_to_true")
-    public ResponseEntity<?> postSeenToTrue(@RequestParam Integer id) {
+    public ResponseEntity<Detail> postSeenToTrue(@RequestParam Integer id) {
         messageService.updateIsSeenToTrue(id);
 
         return ResponseEntity.ok(new Detail("Update isSeen to true successfully!"));

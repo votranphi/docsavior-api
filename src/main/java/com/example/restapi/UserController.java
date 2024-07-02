@@ -27,8 +27,6 @@ import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.json.JSONArray;
-import org.json.JSONObject;
 
 
 
@@ -42,33 +40,33 @@ public class UserController {
     public static final int NUMBER_OF_RANDOM_PASSWORD_CHARACTER = 6;
 
     @PostMapping("/add")
-    public @ResponseBody ResponseEntity<?> postSignUp(@RequestParam String username, @RequestParam String email, @RequestParam String phoneNumber, @RequestParam String password, @RequestParam String fullName, @RequestParam String birthDay, @RequestParam boolean gender) {
+    public @ResponseBody ResponseEntity<Detail> postSignUp(@RequestParam String username, @RequestParam String email, @RequestParam String phoneNumber, @RequestParam String password, @RequestParam String fullName, @RequestParam String birthDay, @RequestParam boolean gender) {
         // check if the email is valid
         Pattern pattern = Pattern.compile(".+@gmail.com$");
         Matcher matcher = pattern.matcher(email);
         boolean isFound = matcher.find();
         if (!isFound) {
-            return new ResponseEntity<>(new Detail("Email is invalid!"), HttpStatusCode.valueOf(600));
+            return new ResponseEntity<Detail>(new Detail("Email is invalid!"), HttpStatusCode.valueOf(600));
         }
 
         // check if the phone number is valid
         if (phoneNumber.length() != 10 || phoneNumber.charAt(0) != '0') {
-            return new ResponseEntity<>(new Detail("Phone number is invalid!"), HttpStatusCode.valueOf(600));
+            return new ResponseEntity<Detail>(new Detail("Phone number is invalid!"), HttpStatusCode.valueOf(600));
         }
 
         // check if the username is in table
         if (userService.doesUsernameExist(username)) {
-            return new ResponseEntity<>(new Detail("Username already exists!"), HttpStatusCode.valueOf(600));
+            return new ResponseEntity<Detail>(new Detail("Username already exists!"), HttpStatusCode.valueOf(600));
         }
 
         // check if the email is registered
         if (userService.doesEmailExist(email)) {
-            return new ResponseEntity<>(new Detail("Email already exists!"), HttpStatusCode.valueOf(600));
+            return new ResponseEntity<Detail>(new Detail("Email already exists!"), HttpStatusCode.valueOf(600));
         }
 
         // check if the phoneNumber is registered
         if (userService.doesPhoneNumberExist(phoneNumber)) {
-            return new ResponseEntity<>(new Detail("Phone number already exists!"), HttpStatusCode.valueOf(600));
+            return new ResponseEntity<Detail>(new Detail("Phone number already exists!"), HttpStatusCode.valueOf(600));
         }
 
         // create new user
@@ -81,14 +79,14 @@ public class UserController {
     }
 
     @PostMapping("/login")
-    public @ResponseBody ResponseEntity<?> postLogin(@RequestParam String username, @RequestParam String password) {
+    public @ResponseBody ResponseEntity<Detail> postLogin(@RequestParam String username, @RequestParam String password) {
         var thisUser = userService.getUserById(username);
 
         if (!thisUser.isEmpty()) {
             if (password.equals(thisUser.get().getPassword())) {
-                return new ResponseEntity<>(new Detail("Login successfully!"), HttpStatusCode.valueOf(200));
+                return new ResponseEntity<Detail>(new Detail("Login successfully!"), HttpStatusCode.valueOf(200));
             } else {
-                return new ResponseEntity<>(new Detail("Wrong password!"), HttpStatusCode.valueOf(600));
+                return new ResponseEntity<Detail>(new Detail("Wrong password!"), HttpStatusCode.valueOf(600));
             }
         }
 
@@ -96,21 +94,21 @@ public class UserController {
     }
 
     @PostMapping("/logout")
-    public @ResponseBody ResponseEntity<?> postLogout(@RequestParam String username) {
+    public @ResponseBody ResponseEntity<Detail> postLogout(@RequestParam String username) {
         userService.updateIsActive(username, false);
 
         return ResponseEntity.ok(new Detail("Logout successfully!"));
     }
 
     @PostMapping("/login_to_true")
-    public @ResponseBody ResponseEntity<?> postLoginSignal(@RequestParam String username) {
+    public @ResponseBody ResponseEntity<Detail> postLoginSignal(@RequestParam String username) {
         userService.updateIsActive(username, true);
 
         return ResponseEntity.ok(new Detail("Login successfully!"));
     }
 
     @PostMapping("/password_recovery")
-    public @ResponseBody ResponseEntity<?> postPasswordRecovery(@RequestParam String username, @RequestParam String email, @RequestParam String phoneNumber) {
+    public @ResponseBody ResponseEntity<Detail> postPasswordRecovery(@RequestParam String username, @RequestParam String email, @RequestParam String phoneNumber) {
         var thisUser = userService.getUserById(username);
 
         if (!thisUser.isEmpty()) {
@@ -172,22 +170,22 @@ public class UserController {
                         Transport.send(message);
                     } catch (Exception ex) {
                         System.out.println(ex.getMessage());
-                        return new ResponseEntity<>(new Detail(ex.getMessage()), HttpStatusCode.valueOf(500));
+                        return new ResponseEntity<Detail>(new Detail(ex.getMessage()), HttpStatusCode.valueOf(500));
                     }
 
                     // update new password in database
                     userService.updatePassword(username, randomPassword);
 
-                    return new ResponseEntity<>(new Detail("New password was sent to your email!"), HttpStatusCode.valueOf(200));
+                    return new ResponseEntity<Detail>(new Detail("New password was sent to your email!"), HttpStatusCode.valueOf(200));
                 } else {
-                    return new ResponseEntity<>(new Detail("Wrong phone number!"), HttpStatusCode.valueOf(600));
+                    return new ResponseEntity<Detail>(new Detail("Wrong phone number!"), HttpStatusCode.valueOf(600));
                 }
             } else {
-                return new ResponseEntity<>(new Detail("Wrong email!"), HttpStatusCode.valueOf(600));
+                return new ResponseEntity<Detail>(new Detail("Wrong email!"), HttpStatusCode.valueOf(600));
             }
         }
 
-        return new ResponseEntity<>(new Detail("Username doesn't exist!"), HttpStatusCode.valueOf(600));
+        return new ResponseEntity<Detail>(new Detail("Username doesn't exist!"), HttpStatusCode.valueOf(600));
     }
 
     @GetMapping("/me")
@@ -197,29 +195,16 @@ public class UserController {
         if (user.isEmpty()) {
             return new ResponseEntity<>(new Detail("Username doesn't exist!"), HttpStatusCode.valueOf(600));
         } else {
-            JSONObject jsonObject = new JSONObject();
-            jsonObject.put("username", user.get().getUsername());
-            jsonObject.put("email", user.get().getEmail());
-            jsonObject.put("phoneNumber", user.get().getPhoneNumber());
-            // jsonObject.put("password", user.get().getPassword());
-            jsonObject.put("isActive", user.get().getIsActive());
-            jsonObject.put("fullName", user.get().getFullName());
-            jsonObject.put("birthDate", user.get().getBirthDate());
-            jsonObject.put("gender", user.get().getGender());
-            jsonObject.put("avatarData", user.get().getAvatarData());
-            jsonObject.put("avatarName", user.get().getAvatarName());
-            jsonObject.put("avatarExtension", user.get().getAvatarExtension());
-
-            return ResponseEntity.ok(jsonObject.toString());
+            return ResponseEntity.ok(user.get());
         }
     }
 
     @PostMapping("/password_change")
-    public ResponseEntity<?> postPasswordChange(@RequestParam String username, @RequestParam String oldPassword, @RequestParam String newPassword) {
+    public ResponseEntity<Detail> postPasswordChange(@RequestParam String username, @RequestParam String oldPassword, @RequestParam String newPassword) {
         var user = userService.getUserById(username);
 
         if (!user.get().getPassword().equals(oldPassword)) {
-            return new ResponseEntity<>(new Detail("Old password's wrong!"), HttpStatusCode.valueOf(600));
+            return new ResponseEntity<Detail>(new Detail("Old password's wrong!"), HttpStatusCode.valueOf(600));
         }
         
         userService.updatePassword(username, newPassword);
@@ -227,14 +212,14 @@ public class UserController {
     }
 
     @PostMapping("/avatar")
-    public ResponseEntity<?> postAvatar(@RequestParam String username, @RequestParam String avatarData, @RequestParam String avatarName, @RequestParam String avatarExtension) {
+    public ResponseEntity<Detail> postAvatar(@RequestParam String username, @RequestParam String avatarData, @RequestParam String avatarName, @RequestParam String avatarExtension) {
         userService.updateAvatar(username, avatarData, avatarName, avatarExtension);
 
         return ResponseEntity.ok(new Detail("Avatar updated successfully!"));
     }
     
     @PostMapping("/look_up")
-    public ResponseEntity<?> postLookUpUser(@RequestParam String lookUpInfo) {
+    public ResponseEntity<List<User>> postLookUpUser(@RequestParam String lookUpInfo) {
         // get all users in database
         Iterable<User> users = userService.findAllUsers();
 
@@ -258,50 +243,23 @@ public class UserController {
             }
         }
 
-        // init a jsonObject
-        JSONObject jsonObject = new JSONObject();
-
-        // init a jsonArray
-        JSONArray jsonArray = new JSONArray();
-
-        // convert foundUsers to jsonArray
-        for (User i : foundUsers) {
-            JSONObject temp = new JSONObject();
-            temp.put("username", i.getUsername());
-            temp.put("email", i.getEmail());
-            temp.put("phoneNumber", i.getPhoneNumber());
-            // temp.put("password", i.getPassword());
-            temp.put("isActive", i.getIsActive());
-            temp.put("fullName", i.getFullName());
-            temp.put("birthDate", i.getBirthDate());
-            temp.put("gender", i.getGender());
-            temp.put("avatarData", i.getAvatarData());
-            temp.put("avatarName", i.getAvatarName());
-            temp.put("avatarExtension", i.getAvatarExtension());
-
-            jsonArray.put(temp);
-        }
-
-        // put the jsonArray to jsonObject
-        jsonObject.put("foundUsers", jsonArray);
-
-        return ResponseEntity.ok(jsonObject.toString());
+        return ResponseEntity.ok(foundUsers);
     }
     
     @GetMapping("/avatar_data")
-    public ResponseEntity<?> getMethodName(@RequestParam String username) {
+    public ResponseEntity<Detail> getMethodName(@RequestParam String username) {
         return ResponseEntity.ok(new Detail(userService.getAvatarDataByUsername(username)));
     }
     
     @PostMapping("/update_user_info")
-    public ResponseEntity<?> postUserInfo(@RequestParam String username, @RequestParam String fullName, @RequestParam String email, @RequestParam boolean gender, @RequestParam String birthDate, @RequestParam String phoneNumber)
+    public ResponseEntity<Detail> postUserInfo(@RequestParam String username, @RequestParam String fullName, @RequestParam String email, @RequestParam boolean gender, @RequestParam String birthDate, @RequestParam String phoneNumber)
     {
         userService.updateUserInfo(username, fullName, email, gender, birthDate, phoneNumber);
         return ResponseEntity.ok(new Detail("update user information succesfully!"));
     }
 
     @GetMapping("/status")
-    public ResponseEntity<?> getUserStatus(@RequestParam String username) {
+    public ResponseEntity<Detail> getUserStatus(@RequestParam String username) {
         boolean userStatus = userService.getStatusByUsername(username);
 
         return ResponseEntity.ok(new Detail(userStatus ? "true" : "false"));

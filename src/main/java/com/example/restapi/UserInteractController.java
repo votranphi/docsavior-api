@@ -19,7 +19,7 @@ public class UserInteractController {
     UserInteractService userInteractService = new UserInteractService();
 
     @PostMapping("/interact")
-    public ResponseEntity<?> postLikeUserInteract(@RequestParam String username, @RequestParam Integer idPost, @RequestParam boolean type) {
+    public ResponseEntity<Detail> postLikeUserInteract(@RequestParam String username, @RequestParam Integer idPost, @RequestParam boolean type) {
         UserInteract userInteract = new UserInteract(username, idPost, type);
 
         if (userInteract.getType()) // Like
@@ -45,7 +45,7 @@ public class UserInteractController {
     }
 
     @GetMapping("/likeordislike") // to see if user liked or disliked a post
-    public ResponseEntity<?> getIfLike(@RequestParam String username, @RequestParam Integer idPost)
+    public ResponseEntity<Detail> getIfLike(@RequestParam String username, @RequestParam Integer idPost)
     {
         if(userInteractService.findInteractByUsernameAndIdPost(username, idPost))
         {

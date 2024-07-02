@@ -2,14 +2,10 @@ package com.example.restapi;
 
 import org.springframework.web.bind.annotation.RestController;
 
-import io.swagger.v3.oas.annotations.parameters.RequestBody;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import org.json.JSONArray;
-import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatusCode;
@@ -18,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-
+import org.springframework.web.bind.annotation.RequestBody;
 
 
 
@@ -36,26 +32,7 @@ public class NewsfeedController {
             return new ResponseEntity<>(new Detail("There's no post to show!"), HttpStatusCode.valueOf(600));
         }
 
-        JSONArray jsonArray = new JSONArray();
-
-        for (Newsfeed i : allPosts) {
-            JSONObject jsonObject = new JSONObject();
-            jsonObject.put("id", i.getId());
-            jsonObject.put("username", i.getUsername());
-            jsonObject.put("postDescription", i.getPostDescription());
-            jsonObject.put("postContent", i.getPostContent());
-            jsonObject.put("likeNumber", i.getLikeNumber());
-            jsonObject.put("dislikeNumber", i.getDislikeNumber());
-            jsonObject.put("commentNumber", i.getCommentNumber());
-            jsonObject.put("fileData", i.getFileData());
-            jsonObject.put("fileName", i.getFileName());
-            jsonObject.put("fileExtension", i.getFileExtension());
-            jsonObject.put("time", i.getTime());
-
-            jsonArray.put(jsonObject);
-        }
-
-        return ResponseEntity.ok(jsonArray.toString());
+        return ResponseEntity.ok(allPosts);
     }
 
     @GetMapping("/post")
@@ -66,31 +43,12 @@ public class NewsfeedController {
             return new ResponseEntity<>(new Detail("There's no post to show!"), HttpStatusCode.valueOf(600));
         }
 
-        JSONArray jsonArray = new JSONArray();
-
-        for (Newsfeed i : posts) {
-            JSONObject jsonObject = new JSONObject();
-            jsonObject.put("id", i.getId());
-            jsonObject.put("username", i.getUsername());
-            jsonObject.put("postDescription", i.getPostDescription());
-            jsonObject.put("postContent", i.getPostContent());
-            jsonObject.put("likeNumber", i.getLikeNumber());
-            jsonObject.put("dislikeNumber", i.getDislikeNumber());
-            jsonObject.put("commentNumber", i.getCommentNumber());
-            jsonObject.put("fileData", i.getFileData());
-            jsonObject.put("fileName", i.getFileName());
-            jsonObject.put("fileExtension", i.getFileExtension());
-            jsonObject.put("time", i.getTime());
-
-            jsonArray.put(jsonObject);
-        }
-
-        return ResponseEntity.ok(jsonArray.toString());
+        return ResponseEntity.ok(posts.toList());
     }
     
 
     @PostMapping("/add")
-    public ResponseEntity<?> postPost(@RequestBody Newsfeed newsfeed) {
+    public ResponseEntity<Detail> postPost(@RequestBody Newsfeed newsfeed) {
         
         // create new Newsfeed entity
         Newsfeed newNewsfeed = new Newsfeed(newsfeed.getUsername(), newsfeed.getPostDescription(), newsfeed.getPostContent(), newsfeed.getFileData(), newsfeed.getFileName(), newsfeed.getFileExtension());
@@ -109,30 +67,11 @@ public class NewsfeedController {
             return new ResponseEntity<>(new Detail("There's no post to show!"), HttpStatusCode.valueOf(600));
         }
 
-        JSONArray jsonArray = new JSONArray();
-
-        for (Newsfeed i : allMyPosts) {
-            JSONObject jsonObject = new JSONObject();
-            jsonObject.put("id", i.getId());
-            jsonObject.put("username", i.getUsername());
-            jsonObject.put("postDescription", i.getPostDescription());
-            jsonObject.put("postContent", i.getPostContent());
-            jsonObject.put("likeNumber", i.getLikeNumber());
-            jsonObject.put("dislikeNumber", i.getDislikeNumber());
-            jsonObject.put("commentNumber", i.getCommentNumber());
-            jsonObject.put("fileData", i.getFileData());
-            jsonObject.put("fileName", i.getFileName());
-            jsonObject.put("fileExtension", i.getFileExtension());
-            jsonObject.put("time", i.getTime());
-
-            jsonArray.put(jsonObject);
-        }
-
-        return ResponseEntity.ok(jsonArray.toString());
+        return ResponseEntity.ok(allMyPosts);
     }
     
     @PostMapping("/look_up")
-    public ResponseEntity<?> postLookUpPost(@RequestParam String lookUpInfo) {
+    public ResponseEntity<List<Newsfeed>> postLookUpPost(@RequestParam String lookUpInfo) {
         // get all users in database
         List<Newsfeed> newsfeeds = newsfeedService.getAllPosts();
 
@@ -161,59 +100,19 @@ public class NewsfeedController {
             }
         }
 
-        // init a jsonObject
-        JSONObject jsonObject = new JSONObject();
-
-        // init a jsonArray
-        JSONArray jsonArray = new JSONArray();
-
-        // convert foundUsers to jsonArray
-        for (Newsfeed i : foundNewsfeeds) {
-            JSONObject temp = new JSONObject();
-            temp.put("id", i.getId());
-            temp.put("username", i.getUsername());
-            temp.put("postDescription", i.getPostDescription());
-            temp.put("postContent", i.getPostContent());
-            temp.put("likeNumber", i.getLikeNumber());
-            temp.put("dislikeNumber", i.getDislikeNumber());
-            temp.put("commentNumber", i.getCommentNumber());
-            temp.put("fileData", i.getFileData());
-            temp.put("fileName", i.getFileName());
-            temp.put("fileExtension", i.getFileExtension());
-            temp.put("time", i.getTime());
-
-            jsonArray.put(temp);
-        }
-
-        // put the jsonArray to jsonObject
-        jsonObject.put("foundNewsfeeds", jsonArray);
-
-        return ResponseEntity.ok(jsonObject.toString());
+        return ResponseEntity.ok(foundNewsfeeds);
     }
 
     @GetMapping("/id")
-    public ResponseEntity<?> getMethodName(@RequestParam Integer id) {
+    public ResponseEntity<Newsfeed> getMethodName(@RequestParam Integer id) {
         Optional<Newsfeed> i = newsfeedService.getNewsfeedById(id);
 
-        JSONObject temp = new JSONObject();
-        temp.put("id", i.get().getId());
-        temp.put("username", i.get().getUsername());
-        temp.put("postDescription", i.get().getPostDescription());
-        temp.put("postContent", i.get().getPostContent());
-        temp.put("likeNumber", i.get().getLikeNumber());
-        temp.put("dislikeNumber", i.get().getDislikeNumber());
-        temp.put("commentNumber", i.get().getCommentNumber());
-        temp.put("fileData", i.get().getFileData());
-        temp.put("fileName", i.get().getFileName());
-        temp.put("fileExtension", i.get().getFileExtension());
-        temp.put("time", i.get().getTime());
-
-        return ResponseEntity.ok(temp.toString());
+        return ResponseEntity.ok(i.get());
     }
     
 
     @PostMapping("/like")
-    public ResponseEntity<?> postLike(@RequestParam Integer id)
+    public ResponseEntity<Detail> postLike(@RequestParam Integer id)
     {
         newsfeedService.updateLikeNumber(id);
 
@@ -221,7 +120,7 @@ public class NewsfeedController {
     }
 
     @PostMapping("/unlike")
-    public ResponseEntity<?> postUnlike(@RequestParam Integer id)
+    public ResponseEntity<Detail> postUnlike(@RequestParam Integer id)
     {
         newsfeedService.updateUnlikeNumber(id);
 
@@ -229,7 +128,7 @@ public class NewsfeedController {
     }
 
     @PostMapping("/dislike")
-    public ResponseEntity<?> postDislike(@RequestParam Integer id)
+    public ResponseEntity<Detail> postDislike(@RequestParam Integer id)
     {
         newsfeedService.updateDislikeNumber(id);
 
@@ -237,7 +136,7 @@ public class NewsfeedController {
     }
 
     @PostMapping("/undislike")
-    public ResponseEntity<?> postUndislike(@RequestParam Integer id)
+    public ResponseEntity<Detail> postUndislike(@RequestParam Integer id)
     {
         newsfeedService.updateUndislikeNumber(id);
 
@@ -245,7 +144,7 @@ public class NewsfeedController {
     }
 
     @PostMapping("/comment")
-    public ResponseEntity<?> postComment(@RequestParam Integer id)
+    public ResponseEntity<Detail> postComment(@RequestParam Integer id)
     {
         newsfeedService.updateCommentNumber(id);
 
@@ -253,7 +152,7 @@ public class NewsfeedController {
     }
     
     @PostMapping("/uncomment")
-    public ResponseEntity<?> postUncomment(@RequestParam Integer id)
+    public ResponseEntity<Detail> postUncomment(@RequestParam Integer id)
     {
         newsfeedService.updateUnCommentNumber(id);
 

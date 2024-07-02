@@ -32,14 +32,14 @@ public class FriendController {
     }
     
     @PostMapping("/add")
-    public ResponseEntity<?> postNewFriend(@RequestParam String username, @RequestParam String usernameFriend) {
+    public ResponseEntity<Detail> postNewFriend(@RequestParam String username, @RequestParam String usernameFriend) {
         friendService.saveNewFriend(username, usernameFriend);
 
         return ResponseEntity.ok(new Detail("Friend saved successfully!"));
     }
 
     @DeleteMapping("/delete")
-    public ResponseEntity<?> deleteFriend(@RequestParam String username, @RequestParam String usernameFriend) {
+    public ResponseEntity<Detail> deleteFriend(@RequestParam String username, @RequestParam String usernameFriend) {
         friendService.deleteFriend(username, usernameFriend);
 
         return ResponseEntity.ok(new Detail("Friend deleted successfully!"));

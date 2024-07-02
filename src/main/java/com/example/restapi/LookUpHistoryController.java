@@ -23,7 +23,7 @@ public class LookUpHistoryController {
     LookUpHistoryService lookUpHistoryService = new LookUpHistoryService();
 
     @PostMapping("/add")
-    public ResponseEntity<?> postLookUpHistory(@RequestParam String username, @RequestParam String lookUpInfo, @RequestParam Integer lookUpType) {
+    public ResponseEntity<Detail> postLookUpHistory(@RequestParam String username, @RequestParam String lookUpInfo, @RequestParam Integer lookUpType) {
         LookUpHistory lookUpHistory = new LookUpHistory(username, lookUpInfo, lookUpType);
 
         // add look up history to database if it wasn't added
@@ -37,7 +37,7 @@ public class LookUpHistoryController {
     }
     
     @DeleteMapping("/delete")
-    public ResponseEntity<?> deleteLookUpHistory(@RequestParam String username, @RequestParam String lookUpInfo, @RequestParam Integer lookUpType) {
+    public ResponseEntity<Detail> deleteLookUpHistory(@RequestParam String username, @RequestParam String lookUpInfo, @RequestParam Integer lookUpType) {
         lookUpHistoryService.deleteLookUpHistory(username, lookUpInfo, lookUpType);
 
         return ResponseEntity.ok(new Detail("New lookup history deleted successfully!"));
