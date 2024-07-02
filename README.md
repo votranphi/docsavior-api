@@ -5,7 +5,7 @@ The Spring Boot project for Docsavior is dedicated to creating a robust RESTful 
 For detailed information about our Docsavior mobile application, please visit our repository. Your feedback and contributions are appreciated. Docsavior repository: [NT118.O22_Group10_FinalProject
 ](https://github.com/votranphi/NT118.O22_Group10_FinalProject)
 
-## Entity
+## Entities
 The entities are the persistence objects stores as a record in the database. Here are all the entities, also the tables in MySQL database using in this project:
 
 - **Comment:** store comments of every post in Newsfeed entity.
