@@ -42,34 +42,6 @@ public class UserController {
 
     @PostMapping("/add")
     public @ResponseBody ResponseEntity<Detail> postSignUp(@RequestParam String username, @RequestParam String email, @RequestParam String phoneNumber, @RequestParam String password, @RequestParam String fullName, @RequestParam String birthDay, @RequestParam boolean gender) {
-        // check if the email is valid
-        Pattern pattern = Pattern.compile(".+@gmail.com$");
-        Matcher matcher = pattern.matcher(email);
-        boolean isFound = matcher.find();
-        if (!isFound) {
-            return new ResponseEntity<Detail>(new Detail("Email is invalid!"), HttpStatusCode.valueOf(600));
-        }
-
-        // check if the phone number is valid
-        if (phoneNumber.length() != 10 || phoneNumber.charAt(0) != '0') {
-            return new ResponseEntity<Detail>(new Detail("Phone number is invalid!"), HttpStatusCode.valueOf(600));
-        }
-
-        // check if the username is in table
-        if (userService.doesUsernameExist(username)) {
-            return new ResponseEntity<Detail>(new Detail("Username already exists!"), HttpStatusCode.valueOf(600));
-        }
-
-        // check if the email is registered
-        if (userService.doesEmailExist(email)) {
-            return new ResponseEntity<Detail>(new Detail("Email already exists!"), HttpStatusCode.valueOf(600));
-        }
-
-        // check if the phoneNumber is registered
-        if (userService.doesPhoneNumberExist(phoneNumber)) {
-            return new ResponseEntity<Detail>(new Detail("Phone number already exists!"), HttpStatusCode.valueOf(600));
-        }
-
         // create new user
         User newUser = new User(username, email, phoneNumber, password, fullName, birthDay, gender);
 
@@ -264,5 +236,38 @@ public class UserController {
         boolean userStatus = userService.getStatusByUsername(username);
 
         return ResponseEntity.ok(new Detail(userStatus ? "true" : "false"));
+    }
+
+    @PostMapping("/check")
+    public @ResponseBody ResponseEntity<Detail> postCheckSignUpInfo(@RequestParam String username, @RequestParam String email, @RequestParam String phoneNumber) {
+        // check if the email is valid
+        Pattern pattern = Pattern.compile(".+@gmail.com$");
+        Matcher matcher = pattern.matcher(email);
+        boolean isFound = matcher.find();
+        if (!isFound) {
+            return new ResponseEntity<Detail>(new Detail("Email is invalid!"), HttpStatusCode.valueOf(600));
+        }
+
+        // check if the phone number is valid
+        if (phoneNumber.length() != 10 || phoneNumber.charAt(0) != '0') {
+            return new ResponseEntity<Detail>(new Detail("Phone number is invalid!"), HttpStatusCode.valueOf(600));
+        }
+
+        // check if the username is in table
+        if (userService.doesUsernameExist(username)) {
+            return new ResponseEntity<Detail>(new Detail("Username already exists!"), HttpStatusCode.valueOf(600));
+        }
+
+        // check if the email is registered
+        if (userService.doesEmailExist(email)) {
+            return new ResponseEntity<Detail>(new Detail("Email already exists!"), HttpStatusCode.valueOf(600));
+        }
+
+        // check if the phoneNumber is registered
+        if (userService.doesPhoneNumberExist(phoneNumber)) {
+            return new ResponseEntity<Detail>(new Detail("Phone number already exists!"), HttpStatusCode.valueOf(600));
+        }
+
+        return ResponseEntity.ok(new Detail("Username, email and phone number is valid!"));
     }
 }
