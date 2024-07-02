@@ -268,6 +268,6 @@ public class UserController {
             return new ResponseEntity<Detail>(new Detail("Phone number already exists!"), HttpStatusCode.valueOf(600));
         }
 
-        return ResponseEntity.ok(new Detail("Username, email and phone number is valid!"));
+        return ResponseEntity.ok(new Detail("Username, email and phone number are valid!"));
     }
 }
