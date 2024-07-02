@@ -2,6 +2,8 @@ package com.example.restapi;
 
 import org.springframework.web.bind.annotation.RestController;
 
+import io.swagger.v3.oas.annotations.parameters.RequestBody;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -88,10 +90,10 @@ public class NewsfeedController {
     
 
     @PostMapping("/add")
-    public ResponseEntity<?> postPost(@RequestParam String username, @RequestParam String postDescription, @RequestParam String postContent, @RequestParam String fileData, @RequestParam String fileName, @RequestParam String fileExtension) {
+    public ResponseEntity<?> postPost(@RequestBody Newsfeed newsfeed) {
         
         // create new Newsfeed entity
-        Newsfeed newNewsfeed = new Newsfeed(username, postDescription, postContent, fileData, fileName, fileExtension);
+        Newsfeed newNewsfeed = new Newsfeed(newsfeed.getUsername(), newsfeed.getPostDescription(), newsfeed.getPostContent(), newsfeed.getFileData(), newsfeed.getFileName(), newsfeed.getFileExtension());
 
         // save newNewsfeed
         newsfeedService.saveNewNewsfeed(newNewsfeed);
