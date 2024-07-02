@@ -26,6 +26,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.GetMapping;
 
 
@@ -212,8 +213,8 @@ public class UserController {
     }
 
     @PostMapping("/avatar")
-    public ResponseEntity<Detail> postAvatar(@RequestParam String username, @RequestParam String avatarData, @RequestParam String avatarName, @RequestParam String avatarExtension) {
-        userService.updateAvatar(username, avatarData, avatarName, avatarExtension);
+    public ResponseEntity<Detail> postAvatar(@RequestBody User user) {
+        userService.updateAvatar(user.getUsername(), user.getAvatarData(), user.getAvatarName(), user.getAvatarExtension());
 
         return ResponseEntity.ok(new Detail("Avatar updated successfully!"));
     }
