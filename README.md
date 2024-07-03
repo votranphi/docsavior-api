@@ -1,4 +1,4 @@
-# Restful APIs for Docsavior
+# RESTful API for Docsavior
 The Spring Boot project for Docsavior is dedicated to creating a robust RESTful API that powers the Docsavior mobile application. This API facilitates seamless access to and management of a vast library of free documents, ensuring users can easily find, retrieve, and utilize the resources they need. Designed with scalability and performance in mind, the project provides a solid backend infrastructure to support the various functionalities of Docsavior, enhancing the user experience and ensuring reliable document delivery.
 
 ## Docsavior reference
@@ -89,7 +89,7 @@ Here are all the endpoints in this project:
     - **/user_interact/likeordislike (GET):** get the user's interaction on a post.
 
 ## Credits
-This Restful APIs project powers the Docsavior mobile application was completed by Group 10 of NT118.O22 - Mobile Application Development, University of Information Technology (UIT), Vietnam National University, Ho Chi Minh City (VNU-HCM). The group members are:
+This RESTful API project powers the Docsavior mobile application was completed by Group 10 of NT118.O22 - Mobile Application Development, University of Information Technology (UIT), Vietnam National University, Ho Chi Minh City (VNU-HCM). The group members are:
 - Vo Tran Phi (Student ID: 22521081)  
 Github link: [votranphi](https://github.com/votranphi) 
 - Le Duong Minh Phuc (Student ID: 22521116)  
