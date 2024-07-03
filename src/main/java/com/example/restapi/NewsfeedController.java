@@ -54,9 +54,10 @@ public class NewsfeedController {
         Newsfeed newNewsfeed = new Newsfeed(newsfeed.getUsername(), newsfeed.getPostDescription(), newsfeed.getPostContent(), newsfeed.getFileData(), newsfeed.getFileName(), newsfeed.getFileExtension());
 
         // save newNewsfeed
-        newsfeedService.saveNewNewsfeed(newNewsfeed);
+        Integer id = newsfeedService.saveNewNewsfeed(newNewsfeed);
         
-        return ResponseEntity.ok(new Detail("Post successfully!"));
+        // return the post id to client side
+        return ResponseEntity.ok(new Detail(String.valueOf(id)));
     }
 
     @GetMapping("/me")

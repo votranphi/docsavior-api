@@ -41,9 +41,9 @@ public class NewsfeedService {
         return newsfeedRepository.count() == 0;
     }
 
-    // function to save new Newsfeed to Newsfeed table
-    public void saveNewNewsfeed(Newsfeed newnewsfeed) {
-        newsfeedRepository.save(newnewsfeed);
+    // function to save new Newsfeed to Newsfeed table, then return its id
+    public Integer saveNewNewsfeed(Newsfeed newnewsfeed) {
+        return newsfeedRepository.save(newnewsfeed).getId();
     }
 
     public int NumberOfPosts()
