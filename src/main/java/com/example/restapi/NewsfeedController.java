@@ -3,6 +3,8 @@ package com.example.restapi;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 
@@ -100,6 +102,13 @@ public class NewsfeedController {
                 }
             }
         }
+
+        Collections.sort(foundNewsfeeds, new Comparator<Newsfeed>() {
+            @Override
+            public int compare(Newsfeed newsfeed1, Newsfeed newsfeed2) {
+                return (newsfeed1.getLikeMinusDislike() > newsfeed2.getLikeMinusDislike()) ? -1 : (newsfeed1.getLikeMinusDislike() < newsfeed2.getLikeMinusDislike()) ? 1 : 0;
+            }
+        });
 
         return ResponseEntity.ok(foundNewsfeeds);
     }

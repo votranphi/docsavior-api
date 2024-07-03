@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -27,7 +28,7 @@ public class NewsfeedService {
 
     // function to ge a sequence of continuous post
     public Page<Newsfeed> getSequenceOfPost(Integer page, Integer pageSize) {
-        Pageable pageable = PageRequest.of(page, pageSize);
+        Pageable pageable = PageRequest.of(page, pageSize, Sort.by("likeMinusDislike").descending());
         return newsfeedRepository.findAll(pageable);
     }
 
@@ -55,6 +56,7 @@ public class NewsfeedService {
     {
         newsfeedRepository.findById(id).map(target -> {
             target.setLikeNumber(target.getLikeNumber()+1);
+            target.setLikeMinusDislike(target.getLikeMinusDislike()+1);
             return target;
         });
     }
@@ -64,6 +66,7 @@ public class NewsfeedService {
     {
         newsfeedRepository.findById(id).map(target -> {
             target.setDislikeNumber(target.getDislikeNumber()+1);
+            target.setLikeMinusDislike(target.getLikeMinusDislike()-1);
             return target;
         });
     }
@@ -91,6 +94,7 @@ public class NewsfeedService {
     {
         newsfeedRepository.findById(id).map(target -> {
             target.setLikeNumber(target.getLikeNumber()-1);
+            target.setLikeMinusDislike(target.getLikeMinusDislike()-1);
             return target;
         });
     }
@@ -100,6 +104,7 @@ public class NewsfeedService {
     {
         newsfeedRepository.findById(id).map(target -> {
             target.setDislikeNumber(target.getDislikeNumber()-1);
+            target.setLikeMinusDislike(target.getLikeMinusDislike()+1);
             return target;
         });
     }

@@ -35,6 +35,8 @@ public class Newsfeed {
 
     private Long time;
 
+    private Integer likeMinusDislike;
+
     public Newsfeed(String username, String postDescription, String postContent, String fileData, String fileName, String fileExtension) {
         this.username = username;
         this.postDescription = postDescription;
@@ -46,6 +48,7 @@ public class Newsfeed {
         this.fileName = fileName;
         this.fileExtension = fileExtension;
         this.time = System.currentTimeMillis() / 1000L;
+        this.likeMinusDislike = 0;
     }
 
     public Newsfeed() { }
@@ -94,6 +97,10 @@ public class Newsfeed {
         return time;
     }
 
+    public Integer getLikeMinusDislike() {
+        return likeMinusDislike;
+    }
+
     public void setId(Integer id) {
         this.id = id;
     }
@@ -136,5 +143,9 @@ public class Newsfeed {
 
     public void setTime(Long time) {
         this.time = time;
+    }
+
+    public void setLikeMinusDislike(Integer likeMinusDislike) {
+        this.likeMinusDislike = likeMinusDislike;
     }
 }
