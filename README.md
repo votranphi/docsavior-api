@@ -54,10 +54,12 @@ Here are all the endpoints in this project:
     - **/newsfeed/all (GET):** get all posts existed in the table.
     - **/newsfeed/comment (POST):** increase the post's comment number by 1.
     - **/newsfeed/dislike (POST):** increase the post's dislike number by 1.
+    - **/newsfeed/found_size (GET):** get number of posts based on "lookup string".
     - **/newsfeed/id (GET):** get a post specified by its ID.
     - **/newsfeed/like (POST):** increase the post's like number by 1.
     - **/newsfeed/look_up (POST):** find and return posts defined by "lookup string".
     - **/newsfeed/me (GET):** get all posts defined by username.
+    - **/newsfeed/me_size (GET):** get number of user's posts based on user's username.
     - **/newsfeed/post (GET):** get an array of post specified by "page number" and "page size". In other words, get posts with pagination.
     - **/newsfeed/size (GET):** get the size of the Newsfeed table (number of post).
     - **/newsfeed/uncomment (POST):** decrease the post's comment number by 1.
