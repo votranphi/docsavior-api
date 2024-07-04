@@ -3,6 +3,8 @@ package com.example.restapi;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 
@@ -68,11 +70,11 @@ public class NewsfeedController {
             return new ResponseEntity<>(new Detail("There's no post to show!"), HttpStatusCode.valueOf(600));
         }
 
-        return ResponseEntity.ok(allMyPosts);
+        return ResponseEntity.ok(allMyPosts.toList());
     }
     
     @PostMapping("/look_up")
-    public ResponseEntity<List<Newsfeed>> postLookUpPost(@RequestParam Integer page, @RequestParam Integer pageSize, @RequestParam String lookUpInfo) {
+    public ResponseEntity<List<Newsfeed>> postLookUpPost(@RequestParam String lookUpInfo, @RequestParam Integer page, @RequestParam Integer pageSize) {
         // get all users in database
         List<Newsfeed> newsfeeds = newsfeedService.getAllPosts();
 
@@ -101,7 +103,22 @@ public class NewsfeedController {
             }
         }
 
-        return ResponseEntity.ok(foundNewsfeeds);
+        Collections.sort(foundNewsfeeds, new Comparator<Newsfeed>() {
+            @Override
+            public int compare(Newsfeed newsfeed1, Newsfeed newsfeed2) {
+                return (newsfeed1.getLikeMinusDislike() > newsfeed2.getLikeMinusDislike()) ? -1 : (newsfeed1.getLikeMinusDislike() < newsfeed2.getLikeMinusDislike()) ? 1 : 0;
+            }
+        });
+
+        // get the specific sequence of post base on pagination
+        List<Newsfeed> returnedNewsfeed = new ArrayList<>();
+        for (int i = page * pageSize; i < (page + 1) * pageSize; i++) {
+            if (i < foundNewsfeeds.size()) {
+                returnedNewsfeed.add(foundNewsfeeds.get(i));
+            }
+        }
+
+        return ResponseEntity.ok(returnedNewsfeed);
     }
 
     @GetMapping("/id")
@@ -165,4 +182,43 @@ public class NewsfeedController {
         return newsfeedService.NumberOfPosts();
     }
     
+    @GetMapping("/me_size")
+    public int getNUmberOfMyPost(@RequestParam String username) {
+        var allMyPosts = newsfeedService.getAllMyPost(username);
+
+        return allMyPosts.size();
+    }
+
+    @GetMapping("/found_size")
+    public int getNumberOfFoundPost(@RequestParam String lookUpInfo) {
+        // get all users in database
+        List<Newsfeed> newsfeeds = newsfeedService.getAllPosts();
+
+        // lowercase the lookUpInfo and remove the leading/trailing space if it has
+        String lowercasedLKI = lookUpInfo.toLowerCase().trim();
+
+        // split the string to do the searching
+        String[] spl = lowercasedLKI.split("\s");
+
+        // init the foundUsers which stores found users
+        List<Newsfeed> foundNewsfeeds = new ArrayList<>();
+
+        // found newsfeed
+        for (Newsfeed i : newsfeeds) {
+            for (String j : spl) {
+                // add the newfeed if it's contains at least one word of the lookUpInfo
+                if (
+                    i.getPostDescription().toLowerCase().contains(j) ||
+                    i.getPostContent().toLowerCase().contains(j) ||
+                    i.getFileName().toLowerCase().contains(j) ||
+                    i.getFileExtension().toLowerCase().contains(j)
+                ) {
+                    foundNewsfeeds.add(i);
+                    break;
+                }
+            }
+        }
+
+        return foundNewsfeeds.size();
+    }    
 }   

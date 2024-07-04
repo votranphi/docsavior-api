@@ -32,6 +32,11 @@ public class NewsfeedService {
         return newsfeedRepository.findAll(pageable);
     }
 
+    // function to get all my post
+    public List<Newsfeed> getAllMyPost(String username) {
+        return newsfeedRepository.findByUsername(username);
+    }
+
     // function to get my post
     public Page<Newsfeed> getMyPost(String username, Integer page, Integer pageSize) {
         Pageable pageable = PageRequest.of(page, pageSize, Sort.by("likeMinusDislike").descending());
