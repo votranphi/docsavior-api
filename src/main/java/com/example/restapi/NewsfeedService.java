@@ -33,8 +33,10 @@ public class NewsfeedService {
     }
 
     // function to get my post
-    public List<Newsfeed> getMyPost(String username) {
-        return newsfeedRepository.findNewsfeedByUsername(username);
+    public Page<Newsfeed> getMyPost(String username, Integer page, Integer pageSize) {
+        Pageable pageable = PageRequest.of(page, pageSize, Sort.by("likeMinusDislike").descending());
+
+        return newsfeedRepository.findByUsername(username, pageable);
     }
 
     // function to check if Newsfeed table is empty

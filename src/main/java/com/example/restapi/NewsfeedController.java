@@ -3,8 +3,6 @@ package com.example.restapi;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 
@@ -63,10 +61,10 @@ public class NewsfeedController {
     }
 
     @GetMapping("/me")
-    public ResponseEntity<?> getMyPost(@RequestParam String username) {
-        var allMyPosts = newsfeedService.getMyPost(username);
+    public ResponseEntity<?> getMyPost(@RequestParam String username, @RequestParam Integer page, @RequestParam Integer pageSize) {
+        var allMyPosts = newsfeedService.getMyPost(username, page, pageSize);
 
-        if (allMyPosts.size() == 0) {
+        if (allMyPosts.toList().size() == 0) {
             return new ResponseEntity<>(new Detail("There's no post to show!"), HttpStatusCode.valueOf(600));
         }
 
@@ -74,7 +72,7 @@ public class NewsfeedController {
     }
     
     @PostMapping("/look_up")
-    public ResponseEntity<List<Newsfeed>> postLookUpPost(@RequestParam String lookUpInfo) {
+    public ResponseEntity<List<Newsfeed>> postLookUpPost(@RequestParam Integer page, @RequestParam Integer pageSize, @RequestParam String lookUpInfo) {
         // get all users in database
         List<Newsfeed> newsfeeds = newsfeedService.getAllPosts();
 
@@ -102,13 +100,6 @@ public class NewsfeedController {
                 }
             }
         }
-
-        Collections.sort(foundNewsfeeds, new Comparator<Newsfeed>() {
-            @Override
-            public int compare(Newsfeed newsfeed1, Newsfeed newsfeed2) {
-                return (newsfeed1.getLikeMinusDislike() > newsfeed2.getLikeMinusDislike()) ? -1 : (newsfeed1.getLikeMinusDislike() < newsfeed2.getLikeMinusDislike()) ? 1 : 0;
-            }
-        });
 
         return ResponseEntity.ok(foundNewsfeeds);
     }
