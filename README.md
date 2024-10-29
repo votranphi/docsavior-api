@@ -2,8 +2,7 @@
 The Spring Boot project for Docsavior is dedicated to creating a robust RESTful API that powers the Docsavior mobile application. This API facilitates seamless access to and management of a vast library of free documents, ensuring users can easily find, retrieve, and utilize the resources they need. Designed with scalability and performance in mind, the project provides a solid backend infrastructure to support the various functionalities of Docsavior, enhancing the user experience and ensuring reliable document delivery.
 
 ## Docsavior reference
-For detailed information about our Docsavior mobile application, please visit our repository. Your feedback and contributions are appreciated. Docsavior repository: [NT118.O22_Group10_FinalProject
-](https://github.com/votranphi/NT118.O22_Group10_FinalProject)
+For detailed information about our Docsavior mobile application, please visit our repository. Your feedback and contributions are appreciated. Docsavior repository: [docsavior](https://github.com/votranphi/docsavior)
 
 ## Entities
 The entities are the persistence objects stores as a record in the database. Here are all the entities, also the tables in MySQL database using in this project:
