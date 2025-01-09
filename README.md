@@ -1,4 +1,14 @@
 # RESTful API for Docsavior
+
+![Repo Size](https://img.shields.io/github/repo-size/votranphi/docsavior-api)
+![Last Commit](https://img.shields.io/github/last-commit/votranphi/docsavior-api)
+![Open Issues](https://img.shields.io/github/issues/votranphi/docsavior-api)
+![License](https://img.shields.io/github/license/votranphi/docsavior-api)
+
+![Java](https://img.shields.io/badge/Java-17-orange)
+![Spring Boot](https://img.shields.io/badge/Spring%20Boot-3.3.5-green)
+![OpenAPI](https://img.shields.io/badge/OpenAPI-Enabled-blue)
+
 The Spring Boot project for Docsavior is dedicated to creating a robust RESTful API that powers the Docsavior mobile application. This API facilitates seamless access to and management of a vast library of free documents, ensuring users can easily find, retrieve, and utilize the resources they need. Designed with scalability and performance in mind, the project provides a solid backend infrastructure to support the various functionalities of Docsavior, enhancing the user experience and ensuring reliable document delivery.
 
 ## Docsavior reference
@@ -88,6 +98,9 @@ Here are all the endpoints in this project:
 10. **UserInteract**:
     - **/user_interact/interact (POST):** add new user's interaction to the table.
     - **/user_interact/likeordislike (GET):** get the user's interaction on a post.
+
+## License
+This project is licensed under the [Apache License 2.0](LICENSE). See the `LICENSE` file for details.
 
 ## Credits
 This RESTful API project powers the Docsavior mobile application was completed by Group 10 of NT118.O22 - Mobile Application Development, University of Information Technology (UIT), Vietnam National University, Ho Chi Minh City (VNU-HCM). The group members are:
