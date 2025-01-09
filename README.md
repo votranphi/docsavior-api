@@ -6,7 +6,7 @@
 ![License](https://img.shields.io/github/license/votranphi/docsavior-api)
 
 ![Java](https://img.shields.io/badge/Java-17-orange)
-![Spring Boot](https://img.shields.io/badge/Spring%20Boot-3.3.5-green)
+![Spring Boot](https://img.shields.io/badge/Spring%20Boot-3.4.1-green)
 ![OpenAPI](https://img.shields.io/badge/OpenAPI-Enabled-blue)
 
 The Spring Boot project for Docsavior is dedicated to creating a robust RESTful API that powers the Docsavior mobile application. This API facilitates seamless access to and management of a vast library of free documents, ensuring users can easily find, retrieve, and utilize the resources they need. Designed with scalability and performance in mind, the project provides a solid backend infrastructure to support the various functionalities of Docsavior, enhancing the user experience and ensuring reliable document delivery.
